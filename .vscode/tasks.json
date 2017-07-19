@@ -1,0 +1,38 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "isShellCommand": true,
+    "command": "bash",
+    "tasks": [
+        {
+            "taskName": "CMake",
+            "command": "cmake",
+            "args": ["-G", "Unix Makefiles", "-DCMAKE_BUILD_TYPE=Debug", "."],
+            "type": "shell",
+            "group": "build"  
+        },
+        {
+            "taskName": "Make",
+            "command": "make",
+            "task": "default",
+            "type": "shell",
+            "group": "build"
+        },
+        {
+            "taskName": "Test",
+            "isTestCommand": true,
+            "command": "make",
+            "args": ["test", "CTEST_OUTPUT_ON_FAILURE=1"],
+            "type": "shell",
+            "group": "test"
+        },
+         {
+            "taskName": "Run",
+            "command": "./bin/schach",
+            "task": "default",
+            "type": "shell",
+            "group": "build"
+        } 
+    ]
+}
