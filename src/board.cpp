@@ -13,23 +13,13 @@ using namespace std;
 
 class Board {
 
-    private:
-        vector<Piece> piece;
-        Side side_to_move;
-        // castling;
-        Square en_passant;
-
-        int width;
-        int height;
-        // Piece pieces_list[WIDTH * 4];
-
-    public:
+   public:
         Board()
         {
             width = WIDTH;
             height = HEIGHT;
         };
-        Board(int w, int h) : width(w), height(h){};
+        Board(int w, int h, Square ep) : width(w), height(h), en_passant(ep) {};
 
         Side hasPiece();
 };

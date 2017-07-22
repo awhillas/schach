@@ -66,11 +66,8 @@ if(error_code)
   message(FATAL_ERROR "Failed to clone repository: 'https://github.com/google/googletest.git'")
 endif()
 
-# Use `git checkout <branch>` even though this risks ambiguity with a
-# local path.  Unfortunately we cannot use `git checkout <tree-ish> --`
-# because that will not search for remote branch names, a common use case.
 execute_process(
-  COMMAND "/usr/local/bin/git" ${git_options} checkout master
+  COMMAND "/usr/local/bin/git" ${git_options} checkout master --
   WORKING_DIRECTORY "/Users/alex/dev/schach/ext/gtest/src/googletest"
   RESULT_VARIABLE error_code
   )

@@ -6,10 +6,6 @@
 
 class Piece
 {
-    private:
-        enum Side side;
-        Square *position;
-
     public:
         Piece(Side colour, Square *square) : side(colour), position(square){};
         Move *getMoves(Board *board);

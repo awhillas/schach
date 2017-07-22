@@ -76,6 +76,8 @@ class FENParser
         return original_fen;
     }
 
+    Board getBoard();
+
     void parse() {
         cout << original_fen << endl;
         auto tokens = tokenise(original_fen);
