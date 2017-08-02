@@ -68,7 +68,7 @@ class FENParser
                     current_file++;
                 }
                 else {
-                    // throw an error
+                    throw range_error("Not a nunmber or a known piece type: " + p)
                 }
             }
             current_file = 0;
