@@ -9,9 +9,23 @@
 class Piece
 {
     enum Side side;
-    Square *position;
+    Square* position;
     
     public:
-        Piece(Side colour, Square *square) : side(colour), position(square){};
+        Piece(Side colour, int file, int rank) : side(colour) {};
+        ~Piece() {};
+        // Piece(Side colour, Square *square) : side(colour), position(square){};
         //Move *getMoves(Board *board);
 };
+
+class King : public Piece {};
+
+class Queen : public Piece {};
+
+class Bishop : public Piece {};
+
+class Knight : public Piece {};
+
+class Rook : public Piece {};
+
+class Pawn : public Piece {};

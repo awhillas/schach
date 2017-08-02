@@ -8,7 +8,7 @@
 
 
 class Board {
-    vector<Piece> piece;
+    vector<Piece> piece_list;
     Side side_to_move;
     // castling;
     // Square en_passant;
@@ -21,5 +21,5 @@ class Board {
     public:
         Board();
         Board(int w, int h);
-        Side hasPiece();
+        bool place_piece(char type, int x, int y);
 };

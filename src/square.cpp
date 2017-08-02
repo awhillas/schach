@@ -1,3 +1,6 @@
+#include <string>
+
+
 class Square
 {
   private:
@@ -5,5 +8,13 @@ class Square
     int row;
 
   public:
-    Square(int x, int y) : col(x), row(y){};
+    Square(int x, int y) : col(x), row(y){}
+
+    string to_algebraic() {
+      
+    }
+
+    string to_string() {
+      return this.to_algebraic();
+    }
 };
