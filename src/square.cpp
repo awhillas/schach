@@ -10,7 +10,7 @@ std::string Square::to_algebraic() const {
 }
 
 std::string Square::to_string() const {
-	return this.to_algebraic();
+	return this->to_algebraic();
 }
 
 bool Square::operator==(const Square& other) const {

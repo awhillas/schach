@@ -1,8 +1,13 @@
 #include "fen.h"
+#include "split.h"
 
+#include <cstring>
+
+
+// TODO(bedser>awhillas): Just putting this in so I can cout the board->to_string() below.
+#include <iostream>
 
 using namespace std;
-
 
 FENParser::FENParser(string fen) : original_fen(fen){};
 
@@ -48,7 +53,7 @@ void FENParser::parse() {
 
     parse_piece_placement(ranks, board);
 
-    board->to_string();
+    cout << "Yippe kay yay motherfucker: " << board->to_string() << endl;
 
     // parse_side_to_move();
 

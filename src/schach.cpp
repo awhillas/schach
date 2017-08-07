@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-#include "fen.cpp"
+#include "fen.h"
 #include "board.h"
 
 using namespace std;

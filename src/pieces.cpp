@@ -1,5 +1,6 @@
-#include "piece.h"
+#include "pieces.h"
 
+#include <stdexcept>
 
 using namespace std;
 
@@ -42,58 +43,6 @@ Piece * Piece::make_piece(char type, Side side, int x, int y) {
             return new Pawn(side, x, y);
         default:
             throw invalid_argument("Unknown piece type");
-            return false;
+            return NULL;
     }    
 }
-
-
-
-class King : public Piece
-{
-    public:
-        Move *getMoves(Board *board) {};
-
-        string to_string() {
-            return (side == Side::WHITE) ? 'k' : 'K' ;
-        }
-};
-
-class Queen : public Piece
-{
-    public:
-        string to_string() {
-            return (side == Side::WHITE) ? 'q' : 'Q' ;
-        }
-};
-
-class Bishop : public Piece
-{
-    public:
-        string to_string() {
-            (side == Side::WHITE) ? 'b' : 'B' ;
-        }
-};
-
-class Knight : public Piece
-{
-    public:
-        string to_string() {
-            return (side == Side::WHITE) ? 'n' : 'N' ;
-        }
-};
-
-class Rook : public Piece
-{
-    public:
-        string to_string() {
-            return (side == Side::WHITE) ? 'r' : 'R' ;
-        }
-};
-
-class Pawn : public Piece
-{
-    public:
-        string to_string() {
-            return (side == Side::WHITE) ? 'p' : 'P' ;
-        }
-};

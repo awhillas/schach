@@ -20,7 +20,7 @@ bool Board::place_piece(char type, int x, int y) {
 
     Piece * NewPiece = Piece::make_piece(type, side, x, y);
 
-    piece_list.push(NewPiece);
+    piece_list.push_back(*NewPiece);
     return true;
 }
 
@@ -28,9 +28,9 @@ string Board::to_string() {
     stringstream out;
     for (int h = height; h > 0; h--) {
         for(int w = 0; w < width; w++) {
-            auto square = this.get(w, h);
+            auto square = this->get(w, h);
             if (square != nullptr) {
-                out << square.to_string();
+                out << square->to_string();
             }
             else {
                 out << ' ';
@@ -38,10 +38,10 @@ string Board::to_string() {
         }
         out << endl;
     }
-    return out;
+    return out.str();
 }
 
-Piece Board::get(int file, int rank) {
+Piece* Board::get(int file, int rank) {
     // for (Piece piece : piece_list) {
     //     if (piece->isAt(file, rank)) {
     //         return piece;
