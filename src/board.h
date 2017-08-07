@@ -28,5 +28,5 @@ class Board {
         Board(int, int);
         bool place_piece(char, int, int);
         std::string to_string();
-        Piece get(int, int);
+        Piece* get(int, int);
 };

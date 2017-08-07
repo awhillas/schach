@@ -5,7 +5,6 @@
 #include <string>
 
 #include "board.h"
-#include "split.cpp"
 
 /* 
 FEN parser.
