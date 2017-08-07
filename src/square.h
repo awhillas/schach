@@ -2,8 +2,13 @@
 
 #include <string>
 
-class Square{
+class Square {
     public:
-        Square(int x, int y);   
-        string to_algebraic();
+        const int col;
+        const int row;
+
+        Square(int, int);
+        std::string to_algebraic() const;
+        std::string to_string() const;
+        bool operator==(const Square&) const;
 };

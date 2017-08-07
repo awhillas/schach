@@ -1,21 +1,23 @@
 #pragma once
 
+class Square;
+
 #include "side.h"
 #include "square.h"
-#include "board.h"
+// #include "board.h"
 //#include "move.h"
 
 
 class Piece
-{
-    enum Side side;
-    Square* position;
+{    
+    private:
+        enum Side side;
+        Square* position;
     
     public:
-        Piece(Side colour, int file, int rank) : side(colour) {};
+        Piece(Side, int, int);
         ~Piece() {};
-        // Piece(Side colour, Square *square) : side(colour), position(square){};
-        //Move *getMoves(Board *board);
+        static Piece * make_piece(char, Side, int, int);
 };
 
 class King : public Piece {};

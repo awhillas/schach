@@ -1,20 +1,18 @@
 #include <string>
 
+#include "square.h"
 
-class Square
-{
-  private:
-    int col;
-    int row;
 
-  public:
-    Square(int x, int y) : col(x), row(y){}
+Square::Square(int x, int y) : col(x), row(y) {};
 
-    string to_algebraic() {
-      
-    }
+std::string Square::to_algebraic() const {
+	return std::to_string('a' - col) + std::to_string(7 - row);
+}
 
-    string to_string() {
-      return this.to_algebraic();
-    }
-};
+std::string Square::to_string() const {
+	return this.to_algebraic();
+}
+
+bool Square::operator==(const Square& other) const {
+	return col == other.col && row == other.row;
+}

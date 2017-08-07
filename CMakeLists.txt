@@ -1,7 +1,12 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.1)
 set(PROJECT_NAME_STR schach)
+
 project(${PROJECT_NAME_STR} C CXX)
-set(CMAKE_CXX_FLAGS "-std=c++0x -Wall")
+
+set(CMAKE_CXX_FLAGS "-Wall")
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 include_directories(
     src
