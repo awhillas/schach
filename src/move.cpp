@@ -1,12 +1,16 @@
-#include "square.h"
-#include "pieces.h"
+#include <string>
 
-class Move
-{
-    private:
-        Piece *piece;
-        Square *to;
+#include "move.h"
+// #include "square.h"
+// #include "pieces.h"
 
-    public:
-        Move(Piece *p, Square *s) : piece(p), to(s){};
-};
+
+Move::Move(Piece *p, Square *s) : piece(p), to(s){};
+
+string Move::to_string() {
+    return piece->getPosition()->to_string() + "-" + to->to_string();
+}
+
+bool Move::getIsCapture() {
+    return isCapture;
+}

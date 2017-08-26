@@ -3,7 +3,7 @@
 #include "square.h"
 
 
-Square::Square(int x, int y) : col(x), row(y) {};
+Square::Square(int file, int rank) : col(file), row(rank) {};
 
 std::string Square::to_algebraic() const {
 	return std::to_string('a' - col) + std::to_string(7 - row);

@@ -18,8 +18,8 @@ class Board {
         const int width;
         const int height;
 
-        std::vector<Piece> piece_list;
-        Side side_to_move;
+        std::vector<Piece*> piece_list;
+        // Side side_to_move;
         // castling;
         // Square en_passant;
     

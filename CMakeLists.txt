@@ -1,86 +1,53 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.2)
 set(PROJECT_NAME_STR schach)
 
-project(${PROJECT_NAME_STR} C CXX)
+project(${PROJECT_NAME_STR})
 
-set(CMAKE_CXX_FLAGS "-Wall")
+include_directories("src")
+
+set(CMAKE_CXX_FLAGS "-g -Wall")
+
+# see: https://crascit.com/2015/03/28/enabling-cxx11-in-cmake/
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-include_directories(
-    src
-)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
+file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
+add_executable(${PROJECT_NAME_STR} ${SRC_FILES})
 
-#-------------------
-# set common include folder for module
-#-------------------
-set(COMMON_INCLUDES ${PROJECT_SOURCE_DIR}/include)
-set(EXT_PROJECTS_DIR ${PROJECT_SOURCE_DIR}/ext)
-
-set(
-    CMAKE_LIBRARY_OUTPUT_DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/lib"
-    CACHE
-    PATH
-    "Library output directory"
-)
-
-set(
-    CMAKE_RUNTIME_OUTPUT_DIRECTORY
-    "${CMAKE_CURRENT_SOURCE_DIR}/bin"
-    CACHE
-    PATH
-    "Executable output directory"
-)
-
-add_executable(schach "${CMAKE_CURRENT_SOURCE_DIR}/src/schach.cpp")
-
-# The following is taken from:
-# see: https://github.com/snikulov/google-test-examples/blob/master/CMakeLists.txt
-
-#-------------------
-# Module source
-#-------------------
-#set(PROJECT_LIB_NAME ${PROJECT_NAME_STR}_impl)
-
-#include_directories(${COMMON_INCLUDES})
-# file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
-#add_library(${PROJECT_LIB_NAME} ${SRC_FILES})
-
-add_subdirectory(${EXT_PROJECTS_DIR}/gtest)
 
 #-------------------
 # Test
 #-------------------
-# add_definitions(${MSVC_COMPILER_DEFS})
+# see: https://github.com/Crascit/DownloadProject
 
+# include(CTest)  # automatically call enable_testing() + several new targets
 enable_testing()
-
 set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}_test)
-include_directories(${GTEST_INCLUDE_DIRS} ${COMMON_INCLUDES})
 
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/test/*.cpp)
-add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
-add_dependencies(${PROJECT_TEST_NAME} googletest)
+add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES} ${SRC_FILES})
+# add_dependencies(${PROJECT_TEST_NAME} ${PROJECT_NAME_STR})
 
+# Downloading external modules at configure time (not build time!)
+include(DownloadProject.cmake)
+download_project(PROJ                googletest
+                 GIT_REPOSITORY      https://github.com/google/googletest.git
+                 GIT_TAG             master
+                 UPDATE_DISCONNECTED 1
+)
+# Prevent GoogleTest from overriding our compiler/linker options
+# when building with Visual Studio
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
-if(NOT WIN32 OR MINGW)
-    target_link_libraries(${PROJECT_TEST_NAME}
-        ${GTEST_LIBS_DIR}/libgtest.a
-        ${GTEST_LIBS_DIR}/libgtest_main.a
-        )
-else()
-    target_link_libraries(${PROJECT_TEST_NAME}
-        debug ${GTEST_LIBS_DIR}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${CMAKE_FIND_LIBRARY_SUFFIXES}
-        optimized ${GTEST_LIBS_DIR}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${CMAKE_FIND_LIBRARY_SUFFIXES}
-        )
-    target_link_libraries(${PROJECT_TEST_NAME}
-        debug ${GTEST_LIBS_DIR}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest_main${CMAKE_FIND_LIBRARY_SUFFIXES}
-        optimized ${GTEST_LIBS_DIR}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest_main${CMAKE_FIND_LIBRARY_SUFFIXES}
-        )
-endif()
+add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
 
-target_link_libraries(${PROJECT_TEST_NAME} ${CMAKE_THREAD_LIBS_INIT})
+add_executable(square_test test/square_test.cpp)
+target_link_libraries(square_test gtest)
+add_test(NAME square COMMAND square_test)
 
-add_test(NAME "AllTests" COMMAND ${PROJECT_TEST_NAME} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+# target_link_libraries(example gtest gmock_main)
+# add_test(NAME "AllTests" 
+#          COMMAND ${PROJECT_TEST_NAME} 
+#          WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})

@@ -1,5 +1,5 @@
 #include "board.h"
-
+#include <iostream>
 
 using namespace std;
 
@@ -12,25 +12,26 @@ Board::Board() : width(WIDTH), height(HEIGHT) {};
 
 Board::Board(int w, int h) : width(w), height(h) {};
 
-bool Board::place_piece(char type, int x, int y) {
-    if (x < 0 || x >= width || y < 0 || y >= height)
+bool Board::place_piece(char type, int file, int rank) {
+    if (file < 0 || file >= width || rank < 0 || rank >= height)
         throw invalid_argument( string("Can not place a piece :(") ); // + std::to_string(y + 1) + ", " + ('a' + x) );
     
     Side side = isupper(type) ? Side::WHITE : Side::BLACK;
 
-    Piece * NewPiece = Piece::make_piece(type, side, x, y);
+    Piece * NewPiece = Piece::make_piece(type, side, file, rank);
 
-    piece_list.push_back(*NewPiece);
+    piece_list.push_back(NewPiece);
+    // cout << "piece_list: " << piece_list.size() << "\n";
     return true;
 }
 
 string Board::to_string() {
     stringstream out;
-    for (int h = height; h > 0; h--) {
-        for(int w = 0; w < width; w++) {
-            auto square = this->get(w, h);
-            if (square != nullptr) {
-                out << square->to_string();
+    for (int rank = height - 1; rank >= 0; rank--) {
+        for(int file = 0; file < width; file++) {
+            auto piece = get(file, rank);
+            if (piece != nullptr) {
+                out << piece->to_string();
             }
             else {
                 out << ' ';
@@ -42,10 +43,11 @@ string Board::to_string() {
 }
 
 Piece* Board::get(int file, int rank) {
-    // for (Piece piece : piece_list) {
-    //     if (piece->isAt(file, rank)) {
-    //         return piece;
-    //     }
-    // }
+    for (Piece* piece : piece_list) {
+        // cout << (piece->isAt(file, rank) ? "T" : "F");
+        if (piece->isAt(file, rank)) {
+            return piece;
+        }
+    }
     return nullptr;
 }

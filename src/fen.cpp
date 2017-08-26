@@ -13,8 +13,8 @@ FENParser::FENParser(string fen) : original_fen(fen){};
 
 void FENParser::parse_piece_placement(vector<string> ranks, Board* board) {
     // TODO: remove this hard coded dependancy on these strings? But is part of FEN...?
-    static const char white[] = "kqbnrp";
-    static const char black[] = "KQBNRP";
+    static const char white[] = "KQBNRP";
+    static const char black[] = "kqbnrp";
     
     int current_rank = 7;  // start at the 8th rank
     int current_file = 0;
@@ -24,7 +24,7 @@ void FENParser::parse_piece_placement(vector<string> ranks, Board* board) {
                 current_file += p - '0';
             }
             else if (strchr(white, p) != NULL || strchr(black, p) != NULL) {
-                // board->place_piece(p, current_rank, current_file);
+                board->place_piece(p, current_file, current_rank);
                 current_file++;
             }
             else {
@@ -53,7 +53,7 @@ void FENParser::parse() {
 
     parse_piece_placement(ranks, board);
 
-    cout << "Yippe kay yay motherfucker: " << board->to_string() << endl;
+    cout << "Yippe kay yay motherfucker: \n" << board->to_string() << endl;
 
     // parse_side_to_move();
 
