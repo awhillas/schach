@@ -10,7 +10,13 @@ using namespace std;
 
 Board::Board() : width(WIDTH), height(HEIGHT) {}; 
 
-Board::Board(int w, int h) : width(w), height(h) {};
+Board::Board(int w, int h) : width(w), height(h) {
+    side_to_move = Side::WHITE;
+    castling['K'] = false;
+    castling['Q'] = false;
+    castling['k'] = false;
+    castling['q'] = false;
+ };
 
 bool Board::place_piece(char type, int file, int rank) {
     if (file < 0 || file >= width || rank < 0 || rank >= height)
@@ -23,6 +29,28 @@ bool Board::place_piece(char type, int file, int rank) {
     piece_list.push_back(NewPiece);
     // cout << "piece_list: " << piece_list.size() << "\n";
     return true;
+}
+
+void Board::set_side_to_move(Side stm) {
+    side_to_move = stm;
+}
+
+void Board::set_castling(char what, bool can_they) {
+    castling[what] = can_they;
+}
+
+void Board::set_side_has_castled(Side side) {
+    if (side == Side::WHITE) {
+        castling['K'] = false;
+        castling['Q'] = false;
+    }
+    else if (side == Side::BLACK) {
+        castling['k'] = false;
+        castling['q'] = false;
+    }
+    else {
+        throw range_error("Unknown side as castled?");
+    }
 }
 
 string Board::to_string() {
@@ -39,6 +67,20 @@ string Board::to_string() {
         }
         out << endl;
     }
+    // Side to move
+    out << ((side_to_move == Side::WHITE) ? "White" : "Black") << " to move." << endl;
+    // Who can castle
+    out << "Castling: ";
+    for( const auto& c : castling ) {
+        if (c.second)
+            switch (c.first) {
+                case 'K': out << "White king-side; "; break;
+                case 'Q': out << "White queen-side; "; break;
+                case 'k': out << "Black king-side; "; break;
+                case 'q': out << "Black queen-side; "; break;
+            }
+    }
+    out << endl;
     return out.str();
 }
 

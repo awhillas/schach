@@ -48,7 +48,8 @@ class FENParser {
 	private:
 		std::string original_fen;
 		void parse_piece_placement(std::vector<string>, Board*);
-		void parse_side_to_move(std::string);
+		void parse_side_to_move(std::string, Board*);
+		void parse_castling_ability(string, Board*);
 
 	public:
 		FENParser(std::string);

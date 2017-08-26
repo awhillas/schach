@@ -36,7 +36,24 @@ void FENParser::parse_piece_placement(vector<string> ranks, Board* board) {
     }
 }
 
-void FENParser::parse_side_to_move(string stm) {}
+void FENParser::parse_side_to_move(string stm, Board* board) {
+    if (stm == "w") {
+        board->set_side_to_move(Side::WHITE);
+    }
+    else if (stm == "b") {
+        board->set_side_to_move(Side::BLACK);
+    }
+    else {
+        throw range_error(string("Unknown side-to-move: ") + stm);
+    }
+}
+
+void FENParser::parse_castling_ability(string castling, Board* board) {
+    if (castling == "-") return;
+    for(char& c : castling) {
+        board->set_castling(c, true);
+    }
+}
 
 string FENParser::getOriginalFEN() const {
     return original_fen;
@@ -52,10 +69,9 @@ void FENParser::parse() {
     auto ranks = split(tokens[0], '/');  // Piece Placement
 
     parse_piece_placement(ranks, board);
-
-    cout << "Yippe kay yay motherfucker: \n" << board->to_string() << endl;
-
-    // parse_side_to_move();
-
+    parse_side_to_move(tokens[1], board);
+    parse_castling_ability(tokens[2], board);
+    
+    cout << board->to_string() << endl;
     // return board;
 };
