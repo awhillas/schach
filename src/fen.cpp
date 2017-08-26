@@ -55,6 +55,10 @@ void FENParser::parse_castling_ability(string castling, Board* board) {
     }
 }
 
+void FENParser::parse_en_passant_target_square(string ep_squre, Board* board) {
+    board->set_en_passant_target_square(ep_squre);
+}    
+
 string FENParser::getOriginalFEN() const {
     return original_fen;
 }

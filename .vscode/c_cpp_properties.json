@@ -2,7 +2,7 @@
     "configurations": [
         {
             "name": "null",
-            "includePath": [],
+            "includePath": ["./src/"],
             "defines": [],
             "browse": {
                 "path": [

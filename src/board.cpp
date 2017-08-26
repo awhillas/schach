@@ -16,6 +16,7 @@ Board::Board(int w, int h) : width(w), height(h) {
     castling['Q'] = false;
     castling['k'] = false;
     castling['q'] = false;
+    en_passant_sqr = nullptr;
  };
 
 bool Board::place_piece(char type, int file, int rank) {
@@ -53,7 +54,20 @@ void Board::set_side_has_castled(Side side) {
     }
 }
 
+void Board::set_en_passant_target_square(string ep_square) {
+    en_passant_sqr = Square::from_algebratic(ep_square);
+}
+
+void Board::set_half_move_counter(int count) {
+    half_move_counter = count;
+}
+
+void Board::set_full_move_counter(int count) {
+    full_move_counter = count;
+}
+
 string Board::to_string() {
+    // Graphical representation of the board
     stringstream out;
     for (int rank = height - 1; rank >= 0; rank--) {
         for(int file = 0; file < width; file++) {
@@ -80,6 +94,8 @@ string Board::to_string() {
                 case 'q': out << "Black queen-side; "; break;
             }
     }
+    if (en_passant_sqr)
+       out << "En passant square: " << en_passant_sqr->to_string() << endl;
     out << endl;
     return out.str();
 }
@@ -92,4 +108,26 @@ Piece* Board::get(int file, int rank) {
         }
     }
     return nullptr;
+}
+
+string Board::to_fen() {
+    // Return FEN representation of the current Board state.
+    stringstream out;
+    for (int rank = height - 1; rank >= 0; rank--) {
+        int empty_count = 0;
+        for(int file = 0; file < width; file++) {
+            auto piece = get(file, rank);
+            if (piece != nullptr) {
+                if (empty_count > 0) {
+                    out << empty_count;
+                    empty_count = 0;
+                }
+                out << piece->to_string();
+            }
+            else {
+                empty_count++;
+            }
+        }
+        out << (rank > 0) ? "/" : " ";
+    }    
 }
