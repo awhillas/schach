@@ -23,6 +23,7 @@ add_executable(${PROJECT_NAME_STR} ${SRC_FILES})
 # see: https://github.com/Crascit/DownloadProject
 
 # include(CTest)  # automatically call enable_testing() + several new targets
+
 enable_testing()
 set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}_test)
 
@@ -31,7 +32,7 @@ add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES} ${SRC_FILES})
 # add_dependencies(${PROJECT_TEST_NAME} ${PROJECT_NAME_STR})
 
 # Downloading external modules at configure time (not build time!)
-include(DownloadProject.cmake)
+include(CMake/DownloadProject.cmake)
 download_project(PROJ                googletest
                  GIT_REPOSITORY      https://github.com/google/googletest.git
                  GIT_TAG             master

@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <string>
 #include <sstream>
-#include <unordered_map>
+#include <map>
 
 #include "side.h"
 #include "pieces.h"
@@ -21,7 +21,7 @@ class Board {
 
         std::vector<Piece*> piece_list;
         Side side_to_move;
-        unordered_map<char, bool> castling;
+        map<char, bool> castling;
         /**
          * The en passant target square is specified after a double push of a 
          * pawn, no matter whether an en passant capture is really possible or 

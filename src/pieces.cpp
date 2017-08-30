@@ -68,40 +68,40 @@ Piece * Piece::make_piece(char type, Side side, int file, int rank) {
 King::King(Side s, int a, int b) : Piece(s,a,b) {}
 
 string King::to_string() {
-    return (side == Side::WHITE) ? "k" : "K" ;
+    return (side == Side::BLACK) ? "k" : "K" ;
 }
 
 
 Queen::Queen(Side s, int a, int b) : Piece(s,a,b) {}
 
 string Queen::to_string() {
-    return (side == Side::WHITE) ? "q" : "Q" ;
+    return (side == Side::BLACK) ? "q" : "Q" ;
 }
 
 
 Bishop::Bishop(Side s, int a, int b) : Piece(s,a,b) {};
 
 string Bishop::to_string() {
-    return (side == Side::WHITE) ? "b" : "B" ;
+    return (side == Side::BLACK) ? "b" : "B" ;
 }
 
 
 Knight::Knight(Side s, int a, int b) : Piece(s,a,b) {};
 
 string Knight::to_string() {
-    return (side == Side::WHITE) ? "n" : "N" ;
+    return (side == Side::BLACK) ? "n" : "N" ;
 }
 
 
 Rook::Rook(Side s, int a, int b) : Piece(s,a,b) {};
 
 string Rook::to_string() {
-    return (side == Side::WHITE) ? "r" : "R" ;
+    return (side == Side::BLACK) ? "r" : "R" ;
 }
 
 
 Pawn::Pawn(Side s, int a, int b) : Piece(s,a,b) {};
 
 string Pawn::to_string() {
-    return (side == Side::WHITE) ? "p" : "P" ;
+    return (side == Side::BLACK) ? "p" : "P" ;
 }

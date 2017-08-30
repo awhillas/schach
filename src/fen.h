@@ -51,9 +51,12 @@ class FENParser {
 		void parse_side_to_move(std::string, Board*);
 		void parse_castling_ability(string, Board*);
 		void parse_en_passant_target_square(string, Board*);
-			
+        void parse_halfmove_clock(string, Board*);
+        void parse_fullmove_counter(string fllmvc, Board *board);
+
 	public:
 		FENParser(std::string);
 		std::string getOriginalFEN() const;
-		void parse();
+		Board* parse();
+
 };

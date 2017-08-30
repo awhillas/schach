@@ -17,6 +17,8 @@ Board::Board(int w, int h) : width(w), height(h) {
     castling['k'] = false;
     castling['q'] = false;
     en_passant_sqr = nullptr;
+    half_move_counter = 0;
+    full_move_counter = 0;
  };
 
 bool Board::place_piece(char type, int file, int rank) {
@@ -113,6 +115,8 @@ Piece* Board::get(int file, int rank) {
 string Board::to_fen() {
     // Return FEN representation of the current Board state.
     stringstream out;
+
+    // <Piece Placement>
     for (int rank = height - 1; rank >= 0; rank--) {
         int empty_count = 0;
         for(int file = 0; file < width; file++) {
@@ -128,6 +132,36 @@ string Board::to_fen() {
                 empty_count++;
             }
         }
-        out << (rank > 0) ? "/" : " ";
-    }    
+        if (empty_count > 0) out << empty_count; // 8
+        out << ((rank > 0) ? "/" : " ");
+    }
+
+    // <Side to move>
+    out << ((side_to_move == Side::WHITE) ? 'w' : 'b');
+    out << " ";
+
+    // <Castling ability>
+    bool has_castling = false;
+    for(const auto& c : castling)
+        if (c.second) {
+            has_castling = true;
+            out << c.first;
+        }
+    if (!has_castling) cout << '-';
+    out << " ";
+
+    // <En passant target square>
+    if(en_passant_sqr)
+        out << en_passant_sqr->to_algebraic();
+    else
+        out << "-";
+    out << " ";
+
+    // <Halfmove clock>
+    out << half_move_counter << " ";
+
+    // <Fullmove counter>
+    out << full_move_counter;
+
+    return out.str();
 }
