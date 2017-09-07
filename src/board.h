@@ -8,7 +8,11 @@
 #include <map>
 
 #include "side.h"
-#include "pieces.h"
+
+// Forward declerations
+class Piece;
+class Move;
+class Square;
 
 
 using namespace std;
@@ -47,6 +51,10 @@ class Board {
         std::string to_string();
         Piece* get(int, int);
         string to_fen();
+
+        // Move generation
+
+        vector<Move*> getMoves();
         
         // Setters
 

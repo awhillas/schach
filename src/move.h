@@ -1,11 +1,10 @@
 #pragma once
 
 #include <string>
-#include "pieces.h"
 
-// Forward declerations.
+// Forward declarations.
 class Square;
-
+class Piece;
 
 using namespace std;
 
@@ -13,12 +12,13 @@ using namespace std;
 class Move
 {
     private:
-        Piece* piece;
+        Piece*  piece;
         Square* to;
-        bool isCapture;
+        bool    isCapture;
 
     public:
-        Move(Piece *, Square *);
-        string to_string();
-        bool getIsCapture();
+        Move(Piece*, Square*);
+        string          to_string();
+        bool            getIsCapture();
+        vector<Move*>   getMoves();
 };

@@ -1,5 +1,9 @@
-#include "board.h"
 #include <iostream>
+
+#include "board.h"
+#include "pieces.h"
+#include "move.h"
+#include "square.h"
 
 using namespace std;
 
@@ -104,7 +108,6 @@ string Board::to_string() {
 
 Piece* Board::get(int file, int rank) {
     for (Piece* piece : piece_list) {
-        // cout << (piece->isAt(file, rank) ? "T" : "F");
         if (piece->isAt(file, rank)) {
             return piece;
         }
@@ -164,4 +167,12 @@ string Board::to_fen() {
     out << full_move_counter;
 
     return out.str();
+}
+
+vector<Move *> Board::getMoves() {
+    for(auto const& piece : this->piece_list) {
+        piece->getMoves(*this);
+    }
+    
+    return vector<Move *>();
 }

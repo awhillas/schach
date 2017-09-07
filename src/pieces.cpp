@@ -1,7 +1,7 @@
 #include "pieces.h"
-
-#include <stdexcept>
-#include <iostream>
+#include "square.h"
+#include "board.h"
+#include "move.h"
 
 using namespace std;
 
@@ -63,6 +63,9 @@ Piece * Piece::make_piece(char type, Side side, int file, int rank) {
     }    
 }
 
+vector<Move *> Piece::getMoves(Board board) {
+    return vector<Move *>();
+}
 
 
 King::King(Side s, int a, int b) : Piece(s,a,b) {}
@@ -71,12 +74,23 @@ string King::to_string() {
     return (side == Side::BLACK) ? "k" : "K" ;
 }
 
+vector<Move *> King::getMoves(Board board) {
+    return vector<Move *>();
+}
+
+
+
 
 Queen::Queen(Side s, int a, int b) : Piece(s,a,b) {}
 
 string Queen::to_string() {
     return (side == Side::BLACK) ? "q" : "Q" ;
 }
+
+vector<Move *> Queen::getMoves(Board board) {
+    return vector<Move *>();
+}
+
 
 
 Bishop::Bishop(Side s, int a, int b) : Piece(s,a,b) {};
@@ -85,12 +99,22 @@ string Bishop::to_string() {
     return (side == Side::BLACK) ? "b" : "B" ;
 }
 
+vector<Move *> Bishop::getMoves(Board board) {
+    return vector<Move *>();
+}
+
+
 
 Knight::Knight(Side s, int a, int b) : Piece(s,a,b) {};
 
 string Knight::to_string() {
     return (side == Side::BLACK) ? "n" : "N" ;
 }
+
+vector<Move *> Knight::getMoves(Board board) {
+    return vector<Move *>();
+}
+
 
 
 Rook::Rook(Side s, int a, int b) : Piece(s,a,b) {};
@@ -99,9 +123,19 @@ string Rook::to_string() {
     return (side == Side::BLACK) ? "r" : "R" ;
 }
 
+vector<Move *> Rook::getMoves(Board board) {
+    return vector<Move *>();
+}
+
+
 
 Pawn::Pawn(Side s, int a, int b) : Piece(s,a,b) {};
 
 string Pawn::to_string() {
     return (side == Side::BLACK) ? "p" : "P" ;
 }
+
+vector<Move *> Pawn::getMoves(Board board) {
+    return vector<Move *>();
+}
+

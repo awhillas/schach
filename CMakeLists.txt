@@ -1,9 +1,8 @@
 cmake_minimum_required(VERSION 3.2)
 set(PROJECT_NAME_STR schach)
-
 project(${PROJECT_NAME_STR})
 
-include_directories("src")
+set(CMAKE_MODULE_PATH ${schach_SOURCE_DIR}/CMake)
 
 set(CMAKE_CXX_FLAGS "-g -Wall")
 
@@ -12,8 +11,11 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+#-------------------
+# schach target
+#-------------------
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
+file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)  # depreciated
 add_executable(${PROJECT_NAME_STR} ${SRC_FILES})
 
 
