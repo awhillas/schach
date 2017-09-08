@@ -19,8 +19,8 @@ using namespace std;
 class Piece
 {    
     protected:
-        enum Side side;
-        Square* position;
+        enum Side   side;
+        Square*     position;
     
     public:
         Piece(Side, int, int);
