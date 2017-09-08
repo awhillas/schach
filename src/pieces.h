@@ -4,6 +4,7 @@ class Square;
 class Piece;
 
 #include <string>
+#include <vector>
 
 #include "side.h"
 
