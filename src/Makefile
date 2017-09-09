@@ -1,8 +1,6 @@
 CXX = g++
-CXXFLAGS = -Wall -O3
+CXXFLAGS = -Wall -Wextra -std=c++11 -O3
 LINK = -Wall
-CXXFLAGS = -O3
-LINK =
 INCLUDES =
 
 LIBHEADERS = board.h fen.h move.h pieces.h side.h split.h square.h

@@ -20,9 +20,6 @@ using namespace std;
 
 class Board {
     private:
-        const int width;
-        const int height;
-
         std::vector<Piece*> piece_list;
         Side side_to_move;
         map<char, bool> castling;
@@ -45,6 +42,9 @@ class Board {
         int full_move_counter;
     
     public:
+        const int width;
+        const int height;
+
         Board();
         Board(int, int);
         bool place_piece(char, int, int);

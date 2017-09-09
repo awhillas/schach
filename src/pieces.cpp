@@ -61,23 +61,78 @@ Piece * Piece::make_piece(char type, Side side, int file, int rank) {
     }    
 }
 
-//vector<Square *> Piece::getMoves(Board board) {
-//    return vector<Square *>();
-//}
+vector<Square*> Piece::getMoves(Board) { return vector<Square*>(); }  // TODO: isn't this redundant as its virtual???
 
-JumpingPiece::JumpingPiece(pair<int, int> deltas[]) : move_deltas(deltas) {}
 
-vector<Square *> JumpingPiece::getMoves(Board board) {
-    vector<Square *> moves;
+//
+// JumpingPiece
+//
+
+JumpingPiece::JumpingPiece(
+        Side side,
+        int file,
+        int rank,
+        vector<pair<int, int> > deltas
+) : Piece::Piece(side, file, rank), move_deltas(deltas) {}
+
+vector<Square*> JumpingPiece::getMoves(Board board) {
+    vector<Square*> moves = {};
     for (auto delta : move_deltas) {
-
+        int x = position->col + delta.first;
+        int y = position->row + delta.second;
+        Piece* occupier = board.get(x, y);
+        if (    x >= 0                              // square is within the board...
+            and x < board.width
+            and y >= 0
+            and y < board.height
+            and occupier and occupier->side != side  // ...and no occupied by a friendly
+        ) {
+            Square* sqr = new Square(x, y);
+            moves.push_back(sqr);
+        }
     }
     return moves;
 }
 
-//vector<Square *> SlidingPiece::getMoves(Board board) {
-//    return;
-//}
+
+
+//
+// SlidingPiece
+//
+
+
+SlidingPiece::SlidingPiece(
+        Side side,
+        int file,
+        int rank,
+        vector<pair<int, int> > deltas
+) : Piece::Piece(side, file, rank), move_deltas(deltas) {}
+
+vector<Square*> SlidingPiece::getMoves(Board board) {
+    vector<Square*> moves = {};
+    for (auto delta : move_deltas) {
+        int x = position->col + delta.first;
+        int y = position->row + delta.second;
+        while(true) {
+            if (x >= 0 and x < board.width and y >= 0 and y < board.height) {
+                Piece* occupier = board.get(x, y);
+                Square* sqr = new Square(x, y);
+                if (occupier) {
+                    if (occupier->side != side) // an attack!
+                        moves.push_back(sqr);
+                    break;
+                }
+                moves.push_back(sqr);  // empty square
+                x = x + delta.first;
+                y = y + delta.second;
+            }
+            else { // off-board
+                break;
+            }
+        };
+    }
+    return moves;
+}
 
 
 
@@ -85,18 +140,14 @@ vector<Square *> JumpingPiece::getMoves(Board board) {
 // King
 //
 
-King::King(Side s, int x, int y) : Piece(s, x, y), move_deltas{
-        {-1,-1},{0,-1},{1,-1},
-        {-1,0}, {0,0}, {1,0},
-        {-1,1}, {0,1}, {1,1}
-} {}
+King::King(Side s, int x, int y) : JumpingPiece(s, x, y,
+                                                {{-1,-1},{0,-1},{1,-1},
+                                                 {-1,0}, {0,0}, {1,0},
+                                                 {-1,1}, {0,1}, {1,1}
+                                                }) {}
 
 string King::to_string() {
     return (side == Side::BLACK) ? "k" : "K" ;
-}
-
-vector<Square *> King::getMoves(Board board) {
-    return vector<Square *>();
 }
 
 
@@ -104,14 +155,14 @@ vector<Square *> King::getMoves(Board board) {
 // Queen
 //
 
-Queen::Queen(Side s, int a, int b) : Piece(s,a,b) {}
+Queen::Queen(Side s, int x, int y) : SlidingPiece(s, x, y,
+                                                  {{-1,-1},{0,-1},{1,-1},
+                                                   {-1,0}, {0,0}, {1,0},
+                                                   {-1,1}, {0,1}, {1,1}
+                                                  }) {}
 
 string Queen::to_string() {
     return (side == Side::BLACK) ? "q" : "Q" ;
-}
-
-vector<Square *> Queen::getMoves(Board board) {
-    return vector<Square *>();
 }
 
 
@@ -119,29 +170,22 @@ vector<Square *> Queen::getMoves(Board board) {
 // Bishop
 //
 
-Bishop::Bishop(Side s, int a, int b) : Piece(s,a,b) {};
+Bishop::Bishop(Side s, int x, int y) : SlidingPiece(s, x, y, {{-1,-1}, {1,-1}, {1, -1}, {1, 1}}) {}
 
 string Bishop::to_string() {
     return (side == Side::BLACK) ? "b" : "B" ;
 }
 
-vector<Square *> Bishop::getMoves(Board board) {
-    return vector<Square *>();
-}
 
 
 //
 // Knight
 //
 
-Knight::Knight(Side s, int a, int b) : Piece(s,a,b) {};
+Knight::Knight(Side s, int x, int y) : JumpingPiece(s, x, y, {}) {}
 
 string Knight::to_string() {
     return (side == Side::BLACK) ? "n" : "N" ;
-}
-
-vector<Square *> Knight::getMoves(Board board) {
-    return vector<Square *>();
 }
 
 
@@ -149,14 +193,10 @@ vector<Square *> Knight::getMoves(Board board) {
 // Rook
 //
 
-Rook::Rook(Side s, int a, int b) : Piece(s,a,b) {};
+Rook::Rook(Side s, int x, int y) : SlidingPiece(s, x, y, {{0,-1}, {0,1}, {-1,0}, {1,0}}) {}
 
 string Rook::to_string() {
     return (side == Side::BLACK) ? "r" : "R" ;
-}
-
-vector<Square *> Rook::getMoves(Board board) {
-    return vector<Square *>();
 }
 
 
@@ -164,12 +204,12 @@ vector<Square *> Rook::getMoves(Board board) {
 // Pawn
 //
 
-Pawn::Pawn(Side s, int a, int b) : Piece(s,a,b) {};
+Pawn::Pawn(Side s, int a, int b) : Piece(s,a,b) {}
 
 string Pawn::to_string() {
     return (side == Side::BLACK) ? "p" : "P" ;
 }
 
-vector<Square *> Pawn::getMoves(Board board) {
-    return vector<Square *>();
+vector<Square*> Pawn::getMoves(Board board) {
+    return vector<Square*>();
 }

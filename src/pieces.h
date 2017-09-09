@@ -19,10 +19,11 @@ using namespace std;
 class Piece
 {    
     protected:
-        enum Side   side;
         Square*     position;
     
     public:
+        const enum Side side;
+
         Piece(Side, int, int);
         ~Piece();
 
@@ -31,25 +32,32 @@ class Piece
         bool            isAt(int, int);
         bool            isAt(Square*);
 
-        virtual string            to_string();
-        virtual vector<Square*>   getMoves(Board);
+        virtual string          to_string();
+        virtual vector<Square*>  getMoves(Board);
 };
+
 
 class JumpingPiece : public Piece
 {
-protected:
+    protected:
+        vector<pair<int, int> > move_deltas;
 
-    pair<int, int> move_deltas[];
-
-public:
-
-    vector<Square*> getMoves(Board) override;
+    public:
+        JumpingPiece(Side, int, int, vector<pair<int, int> >);
+        vector<Square*> getMoves(Board) override;
 };
 
-//class SlidingPiece : public Piece
-//{
-//    vector<Square*> getMoves(Board) override;
-//};
+
+class SlidingPiece : public Piece
+{
+    protected:
+        vector<pair<int, int> > move_deltas;
+
+    public:
+        SlidingPiece(Side, int, int, vector<pair<int, int> >);
+        vector<Square*> getMoves(Board) override;
+};
+
 
 class King : public JumpingPiece
 {
@@ -58,33 +66,38 @@ class King : public JumpingPiece
         string to_string() override;
 };
 
-class Queen : public Piece
+
+class Queen : public SlidingPiece
 {
     public:
         Queen(Side, int, int);
         string to_string() override;
 };
 
-class Bishop : public Piece
+
+class Bishop : public SlidingPiece
 {
     public:
         Bishop(Side, int, int);
         string to_string() override;
 };
 
-class Knight : public Piece
+
+class Knight : public JumpingPiece
 {
     public:
         Knight(Side, int, int);
         string to_string() override;
 };
 
-class Rook : public Piece
+
+class Rook : public SlidingPiece
 {
     public:
         Rook(Side, int, int);
         string to_string() override;
 };
+
 
 class Pawn : public Piece
 {

@@ -14,4 +14,6 @@ bin/*
 
 # Ignore Mac specific files
 .DS_Store
-ext/CMakeFiles/
+
+# Cmake stuff
+cmake-build-debug
