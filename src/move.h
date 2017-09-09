@@ -21,5 +21,5 @@ class Move
         Move(Piece*, Square*);
         string          to_string();
         bool            getIsCapture();
-        vector<Move*>   getMoves();
+        vector<Square*>   getMoves();
 };

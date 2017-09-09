@@ -3,8 +3,6 @@
 #include "board.h"
 #include "move.h"
 
-using namespace std;
-
 
 Piece::Piece(Side colour, int file, int rank) : side(colour) {
     position = new Square(file, rank);
@@ -63,23 +61,48 @@ Piece * Piece::make_piece(char type, Side side, int file, int rank) {
     }    
 }
 
-vector<Move *> Piece::getMoves(Board board) {
-    return vector<Move *>();
+//vector<Square *> Piece::getMoves(Board board) {
+//    return vector<Square *>();
+//}
+
+JumpingPiece::JumpingPiece(pair<int, int> deltas[]) : move_deltas(deltas) {}
+
+vector<Square *> JumpingPiece::getMoves(Board board) {
+    vector<Square *> moves;
+    for (auto delta : move_deltas) {
+
+    }
+    return moves;
 }
 
+//vector<Square *> SlidingPiece::getMoves(Board board) {
+//    return;
+//}
 
-King::King(Side s, int a, int b) : Piece(s,a,b) {}
+
+
+//
+// King
+//
+
+King::King(Side s, int x, int y) : Piece(s, x, y), move_deltas{
+        {-1,-1},{0,-1},{1,-1},
+        {-1,0}, {0,0}, {1,0},
+        {-1,1}, {0,1}, {1,1}
+} {}
 
 string King::to_string() {
     return (side == Side::BLACK) ? "k" : "K" ;
 }
 
-vector<Move *> King::getMoves(Board board) {
-    return vector<Move *>();
+vector<Square *> King::getMoves(Board board) {
+    return vector<Square *>();
 }
 
 
-
+//
+// Queen
+//
 
 Queen::Queen(Side s, int a, int b) : Piece(s,a,b) {}
 
@@ -87,11 +110,14 @@ string Queen::to_string() {
     return (side == Side::BLACK) ? "q" : "Q" ;
 }
 
-vector<Move *> Queen::getMoves(Board board) {
-    return vector<Move *>();
+vector<Square *> Queen::getMoves(Board board) {
+    return vector<Square *>();
 }
 
 
+//
+// Bishop
+//
 
 Bishop::Bishop(Side s, int a, int b) : Piece(s,a,b) {};
 
@@ -99,11 +125,14 @@ string Bishop::to_string() {
     return (side == Side::BLACK) ? "b" : "B" ;
 }
 
-vector<Move *> Bishop::getMoves(Board board) {
-    return vector<Move *>();
+vector<Square *> Bishop::getMoves(Board board) {
+    return vector<Square *>();
 }
 
 
+//
+// Knight
+//
 
 Knight::Knight(Side s, int a, int b) : Piece(s,a,b) {};
 
@@ -111,11 +140,14 @@ string Knight::to_string() {
     return (side == Side::BLACK) ? "n" : "N" ;
 }
 
-vector<Move *> Knight::getMoves(Board board) {
-    return vector<Move *>();
+vector<Square *> Knight::getMoves(Board board) {
+    return vector<Square *>();
 }
 
 
+//
+// Rook
+//
 
 Rook::Rook(Side s, int a, int b) : Piece(s,a,b) {};
 
@@ -123,11 +155,14 @@ string Rook::to_string() {
     return (side == Side::BLACK) ? "r" : "R" ;
 }
 
-vector<Move *> Rook::getMoves(Board board) {
-    return vector<Move *>();
+vector<Square *> Rook::getMoves(Board board) {
+    return vector<Square *>();
 }
 
 
+//
+// Pawn
+//
 
 Pawn::Pawn(Side s, int a, int b) : Piece(s,a,b) {};
 
@@ -135,7 +170,6 @@ string Pawn::to_string() {
     return (side == Side::BLACK) ? "p" : "P" ;
 }
 
-vector<Move *> Pawn::getMoves(Board board) {
-    return vector<Move *>();
+vector<Square *> Pawn::getMoves(Board board) {
+    return vector<Square *>();
 }
-
