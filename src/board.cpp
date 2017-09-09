@@ -170,9 +170,13 @@ string Board::to_fen() {
 }
 
 vector<Move *> Board::getMoves() {
-    for(auto const& piece : this->piece_list) {
-        piece->getMoves(*this);
+    vector<Move*> moves {};
+    for(auto& piece : piece_list) {
+        auto places = piece->getMoves(*this);
+        cout << piece->to_string() << ": " << places.size() <<endl;
+        for (auto& sqr : places) {
+            moves.push_back(new Move(piece, sqr));
+        }
     }
-    
-    return vector<Move *>();
+    return moves;
 }

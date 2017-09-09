@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "fen.h"
+#include "move.h"
 
 // uncomment to disable assert()
 // #define NDEBUG
@@ -18,6 +19,15 @@ int main(int argc, char const *argv[])
     Board* b = fen->parse();
     string fen_out = b->to_fen();
 
-    cout << start_position_fen << endl << fen_out << endl;
+
+    auto move_list = b->getMoves();
+    for (auto& move : move_list) {
+        cout << move->to_string() << ", ";
+    };
+    cout << endl << move_list.size() << endl;
+
+    // Test FEN parsing
+
+//    cout << start_position_fen << endl << fen_out << endl;
     assert(start_position_fen == fen_out);
 }

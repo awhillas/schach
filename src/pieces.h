@@ -18,16 +18,13 @@ using namespace std;
 
 class Piece
 {    
-    protected:
-        Square*     position;
-    
     public:
+        const Square*   position;
         const enum Side side;
 
         Piece(Side, int, int);
         ~Piece();
 
-        Square*         getPosition();
         static Piece*   make_piece(char, Side, int, int);
         bool            isAt(int, int);
         bool            isAt(Square*);

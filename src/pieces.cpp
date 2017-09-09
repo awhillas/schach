@@ -3,6 +3,8 @@
 #include "board.h"
 #include "move.h"
 
+#include <iostream>
+
 
 Piece::Piece(Side colour, int file, int rank) : side(colour) {
     position = new Square(file, rank);
@@ -10,10 +12,6 @@ Piece::Piece(Side colour, int file, int rank) : side(colour) {
 
 Piece::~Piece() {
     delete position;
-}
-
-Square* Piece::getPosition() {
-    return position;
 }
 
 string Piece::to_string() {
@@ -24,9 +22,7 @@ string Piece::to_string() {
 }
 
 bool Piece::isAt(int file, int rank) {
-    // cout << "position: " << position->col << "," << position->row;
     return position->col == file && position->row == rank;
-    // return position == new Square(file, rank);
 }
 
 bool Piece::isAt(Square* place) {
@@ -76,10 +72,11 @@ JumpingPiece::JumpingPiece(
 ) : Piece::Piece(side, file, rank), move_deltas(deltas) {}
 
 vector<Square*> JumpingPiece::getMoves(Board board) {
-    vector<Square*> moves = {};
+    vector<Square*> moves {};
     for (auto delta : move_deltas) {
         int x = position->col + delta.first;
         int y = position->row + delta.second;
+        cout << "x:" << x << ", y:" << y << endl;
         Piece* occupier = board.get(x, y);
         if (    x >= 0                              // square is within the board...
             and x < board.width
@@ -109,7 +106,7 @@ SlidingPiece::SlidingPiece(
 ) : Piece::Piece(side, file, rank), move_deltas(deltas) {}
 
 vector<Square*> SlidingPiece::getMoves(Board board) {
-    vector<Square*> moves = {};
+    vector<Square*> moves {};
     for (auto delta : move_deltas) {
         int x = position->col + delta.first;
         int y = position->row + delta.second;
@@ -177,7 +174,6 @@ string Bishop::to_string() {
 }
 
 
-
 //
 // Knight
 //
@@ -211,5 +207,24 @@ string Pawn::to_string() {
 }
 
 vector<Square*> Pawn::getMoves(Board board) {
-    return vector<Square*>();
+    vector<Square*> moves {};
+
+    // Forward depending on the side && noting occupying it
+
+    int x = position->col;
+    int y = (side == Side::WHITE) ? position->row + 1 : position->row - 1 ;
+    if (y >= 0 and y < board.height) {
+        if (not board.get(x, y))
+            moves.push_back(new Square(x, y));
+
+        // Attack left & right
+        Piece* occupier = board.get(x - 1, y);
+        if (occupier and occupier->side != side)
+            moves.push_back(new Square(x - 1, y));
+
+        occupier = board.get(x - 1, y);
+        if (occupier and occupier->side != side)
+            moves.push_back(new Square(x - 1, y));
+    }
+    return moves;
 }
