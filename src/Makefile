@@ -1,5 +1,6 @@
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++11 -O3
+STD = c++11
+CXXFLAGS = -Wall -Wextra -std=$(STD) -O3
 LINK = -Wall
 LIB = /usr/local/Cellar/boost/1.65.1
 #INCLUDES = -I $(LIB)/include
@@ -15,6 +16,9 @@ schach : $(LIBHEADERS) $(LIBSOURCES) schach.cpp
 
 test : $(LIBHEADERS) $(LIBSOURCES) test_main.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBSOURCES) -l boost_unit_test_framework test_main.cpp -o test
+
+check:
+	cppcheck --enable=all --inconclusive --std=$(STD) .
 
 clean :
 	rm -f *.o schach
