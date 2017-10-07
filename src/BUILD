@@ -1,5 +1,4 @@
 cc_binary(
-    name = "schach",
-    srcs = glob(["*.cpp"]),
+	name = "schach",
+	srcs = glob(["*.cpp", "*.h"]),
 )
-        
