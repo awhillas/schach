@@ -1,9 +1,17 @@
-cc_binary(
-	name = "tests",
-	srcs = glob(["*.cpp", "*.h"]),
+# cc_test(
+# 	name = "boost_test",
+# 	srcs = ["test_main.cpp", "test1.cpp", "test2.cpp"],
+# 	deps = [
+# 		"@boost//:test",
+# 	]
+# )
+
+cc_test(
+	name = "fen_test",
+	srcs = ["fen_test.cpp"],
+	copts = ["-Iexternal/gtest/include"],
 	deps = [
-		# "//src/schach",
-		"@boost//:test",
-		# "@gtest//:main",
-	]
+		"@gtest//:main",
+		"//src:fen",
+	],
 )

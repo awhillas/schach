@@ -1,7 +1,6 @@
 #include "gtest/gtest.h"
+#include "src/fen.h"
 
-#include "fen.cpp"
-// #include "board.h"
 
 class FENTest : public ::testing::Test {
  protected:
