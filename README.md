@@ -9,12 +9,22 @@ Bazel needs java8 (bug with java9 still)
 
 # Build instructions
 
-## Bazel 
+## Bazel
 
     bazel build //src:schach
 
+then to run
+
+  bazel run //src:schach
+
+or run all the tests
+
+  bazel test ... --test_output=errors
+
+
 ## `make`
 
+To use the `Makefile` in the `src/` folder.
 Ensure you have a recent version of the gnu compiler collection.
 
 ```

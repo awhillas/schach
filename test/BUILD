@@ -15,3 +15,23 @@ cc_test(
 		"//src:fen",
 	],
 )
+
+cc_test(
+	name = "piece_test",
+	srcs = ["piece_test.cpp"],
+	copts = ["-Iexternal/gtest/include"],
+	deps = [
+		"@gtest//:main",
+		"//src:board",
+	],
+)
+
+cc_test(
+	name = "square_test",
+	srcs = ["square_test.cpp"],
+	copts = ["-Iexternal/gtest/include"],
+	deps = [
+		"@gtest//:main",
+		"//src:board",
+	],
+)

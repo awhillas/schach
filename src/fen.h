@@ -1,17 +1,16 @@
 #pragma once
 
-#include <iostream>
 #include <vector>
 #include <string>
 
 #include "board.h"
 
-/* 
+/*
 FEN parser.
 
-Forsyth-Edwards Notation (FEN) describes a Chess Position. It is an one-line 
-ASCII-string. FEN is based on a system created by Scotsman David Forsyth in 
-the 19th century. Steven Edwards specified the FEN standard for computer chess 
+Forsyth-Edwards Notation (FEN) describes a Chess Position. It is an one-line
+ASCII-string. FEN is based on a system created by Scotsman David Forsyth in
+the 19th century. Steven Edwards specified the FEN standard for computer chess
 applications as part of the Portable Game Notation (PGN).
 
 <FEN> ::=  <Piece Placement>
@@ -36,7 +35,7 @@ applications as part of the Portable Game Notation (PGN).
 <epsquare>   ::= <fileLetter> <eprank>
 <fileLetter> ::= 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h'
 <eprank>     ::= '3' | '6'
-    
+
 <Halfmove Clock> ::= <digit> {<digit>}
 <digit> ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
 

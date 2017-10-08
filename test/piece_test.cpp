@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
-#include "pieces.h"
-#include "side.h"
+
+#include "src/pieces.h"
+#include "src/side.h"
 
 
 TEST(Pieces, DefaultConstructor) {

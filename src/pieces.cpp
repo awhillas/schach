@@ -3,8 +3,6 @@
 #include "board.h"
 #include "move.h"
 
-#include <iostream>
-
 
 Piece::Piece(Side colour, int file, int rank) : side(colour) {
     position = new Square(file, rank);
@@ -54,7 +52,7 @@ Piece * Piece::make_piece(char type, Side side, int file, int rank) {
         default:
             throw invalid_argument("Unknown piece type");
             return NULL;
-    }    
+    }
 }
 
 vector<Square*> Piece::getMoves(Board) { return vector<Square*>(); }  // TODO: isn't this redundant as its virtual???
@@ -76,7 +74,6 @@ vector<Square*> JumpingPiece::getMoves(Board board) {
     for (auto delta : move_deltas) {
         int x = position->col + delta.first;
         int y = position->row + delta.second;
-        cout << "x:" << x << ", y:" << y << endl;
         Piece* occupier = board.get(x, y);
         if (    x >= 0                              // square is within the board...
             and x < board.width

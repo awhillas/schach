@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <iostream>
 
 #include "fen.h"
 #include "move.h"

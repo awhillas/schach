@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "board.h"
 #include "pieces.h"
 #include "move.h"
@@ -12,7 +10,7 @@ using namespace std;
 #define HEIGHT 8
 
 
-Board::Board() : width(WIDTH), height(HEIGHT) {}; 
+Board::Board() : width(WIDTH), height(HEIGHT) {};
 
 Board::Board(int w, int h) : width(w), height(h) {
     side_to_move = Side::WHITE;
@@ -28,13 +26,10 @@ Board::Board(int w, int h) : width(w), height(h) {
 bool Board::place_piece(char type, int file, int rank) {
     if (file < 0 || file >= width || rank < 0 || rank >= height)
         throw invalid_argument( string("Can not place a piece :(") ); // + std::to_string(y + 1) + ", " + ('a' + x) );
-    
+
     Side side = isupper(type) ? Side::WHITE : Side::BLACK;
-
     Piece * NewPiece = Piece::make_piece(type, side, file, rank);
-
     piece_list.push_back(NewPiece);
-    // cout << "piece_list: " << piece_list.size() << "\n";
     return true;
 }
 
@@ -150,7 +145,7 @@ string Board::to_fen() {
             has_castling = true;
             out << c.first;
         }
-    if (!has_castling) cout << '-';
+    if (!has_castling) out << '-';
     out << " ";
 
     // <En passant target square>
@@ -173,7 +168,6 @@ vector<Move *> Board::getMoves() {
     vector<Move*> moves {};
     for(auto& piece : piece_list) {
         auto places = piece->getMoves(*this);
-        cout << piece->to_string() << ": " << places.size() <<endl;
         for (auto& sqr : places) {
             moves.push_back(new Move(piece, sqr));
         }

@@ -4,18 +4,16 @@
 #include <cstring>
 
 
-// TODO(bedser>awhillas): Just putting this in so I can cout the board->to_string() below.
-#include <iostream>
-
 using namespace std;
 
-FENParser::FENParser(string fen) : original_fen(fen){};
+
+FENParser::FENParser(string fen) : original_fen(fen) {};
 
 void FENParser::parse_piece_placement(vector<string> ranks, Board* board) {
     // TODO: remove this hard coded dependancy on these strings? But is part of FEN...?
     static const char white[] = "KQBNRP";
     static const char black[] = "kqbnrp";
-    
+
     int current_rank = 7;  // start at the 8th rank
     int current_file = 0;
     for(auto rank : ranks) {
@@ -89,6 +87,5 @@ Board* FENParser::parse() {
     parse_halfmove_clock(tokens[4], board);
     parse_fullmove_counter(tokens[5], board);
 
-    cout << board->to_string() << endl;
     return board;
 }

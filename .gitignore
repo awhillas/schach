@@ -4,9 +4,13 @@ src/schach
 
 *.swp
 *.o
+*.gch
 
 # Ignore Mac specific files
 .DS_Store
 
 # Bazel stuff
 bazel-*
+
+a.out
+test*.cpp
