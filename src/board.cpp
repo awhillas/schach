@@ -51,7 +51,7 @@ void Board::set_side_has_castled(Side side) {
         castling['q'] = false;
     }
     else {
-        throw range_error("Unknown side as castled?");
+        throw range_error("Unknown side as has castled?");
     }
 }
 
@@ -101,6 +101,9 @@ string Board::to_string() {
     return out.str();
 }
 
+/**
+ * Get piece at given Position
+ */
 Piece* Board::get(int file, int rank) {
     for (Piece* piece : piece_list) {
         if (piece->isAt(file, rank)) {
@@ -167,9 +170,11 @@ string Board::to_fen() {
 vector<Move *> Board::getMoves() {
     vector<Move*> moves {};
     for(auto& piece : piece_list) {
-        auto places = piece->getMoves(*this);
-        for (auto& sqr : places) {
-            moves.push_back(new Move(piece, sqr));
+        if (piece->side == side_to_move) {
+            auto places = piece->getMoves(*this);
+            for (auto& sqr : places) {
+                moves.push_back(new Move(piece, sqr));
+            }
         }
     }
     return moves;

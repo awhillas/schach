@@ -10,6 +10,12 @@
 
 using namespace std;
 
+/**
+    TODO List
+    - Only get moves for the side that can move.
+    - Knight moves
+    - Pawn inital double moves.
+*/
 
 int main(int argc, char const *argv[])
 {
@@ -17,13 +23,14 @@ int main(int argc, char const *argv[])
     FENParser* fen = new FENParser(start_position_fen);
     Board* b = fen->parse();
     string fen_out = b->to_fen();
-
+    cout << "Position: " << fen_out << endl;
 
     auto move_list = b->getMoves();
+    cout << "All moves: " << endl;
     for (auto& move : move_list) {
         cout << move->to_string() << ", ";
     };
-    cout << endl << move_list.size() << endl;
+    cout << endl << "Total: " << move_list.size() << endl;
 
     // Test FEN parsing
 
