@@ -13,7 +13,7 @@ cc_library(
 
 cc_library(
 	name = "board",
-	srcs = ["board.cpp", "pieces.cpp", "move.cpp", "square.cpp"],
+	srcs = ["board.cpp", "pieces.cpp", "move.cpp", "square.cpp", "split.cpp"],
 	hdrs = ["board.h", "pieces.h", "move.h", "square.h", "side.h", "split.h"],
 	visibility = ["//visibility:public"],
 )

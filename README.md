@@ -7,6 +7,18 @@ Bazel needs java8 (bug with java9 still)
     brew cask install caskroom/versions/java8
     brew install bazel
 
+## Ubuntu 17.10
+
+Install Java 8:
+```
+sudo apt install openjdk-8-jdk
+```
+
+Install Bazel:
+
+ * [Google instructions](https://docs.bazel.build/versions/master/install-ubuntu.html)
+
+
 # Build instructions
 
 ## Bazel
