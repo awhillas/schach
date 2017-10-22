@@ -15,11 +15,11 @@ Bazel needs java8 (bug with java9 still)
 
 then to run
 
-  bazel run //src:schach
+    bazel run //src:schach
 
 or run all the tests
 
-  bazel test ... --test_output=errors
+    bazel test ... --test_output=errors
 
 
 ## `make`
