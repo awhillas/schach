@@ -3,11 +3,9 @@
 #include <sstream>
 #include <iterator>
 
+#include "split.h"
 
 using namespace std;
-
-#if !defined(CPP_SPLIT_CPP_)
-#define CPP_SPLIT_CPP_
 
 template<typename T>
 void split(const string &s, char delim, T result) {
@@ -25,4 +23,3 @@ vector<string> split(const string &s, char delim) {
     return elems;
 }
 
-#endif
