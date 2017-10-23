@@ -24,12 +24,20 @@ Board::Board(int w, int h) : width(w), height(h) {
  };
 
 bool Board::place_piece(char type, int file, int rank) {
-    if (file < 0 || file >= width || rank < 0 || rank >= height)
-        throw invalid_argument( string("Can not place a piece :(") ); // + std::to_string(y + 1) + ", " + ('a' + x) );
-
     Side side = isupper(type) ? Side::WHITE : Side::BLACK;
     Piece * NewPiece = Piece::make_piece(type, side, file, rank);
-    piece_list.push_back(NewPiece);
+    return this->place_piece(*NewPiece);
+}
+
+bool Board::place_piece(Piece & piece) {
+    if (piece.position->col < 0
+        || piece.position->col >= width
+        || piece.position->row < 0
+        || piece.position->row >= height
+    )
+        throw invalid_argument( string("Can not place a piece :(") ); // + std::to_string(y + 1) + ", " + ('a' + x) );
+
+    piece_list.push_back(&piece);
     return true;
 }
 
@@ -67,7 +75,7 @@ void Board::set_full_move_counter(int count) {
     full_move_counter = count;
 }
 
-string Board::to_string() {
+string Board::to_string() const {
     // Graphical representation of the board
     stringstream out;
     for (int rank = height - 1; rank >= 0; rank--) {
@@ -104,7 +112,7 @@ string Board::to_string() {
 /**
  * Get piece at given Position
  */
-Piece* Board::get(int file, int rank) {
+Piece* Board::get(int file, int rank) const {
     for (Piece* piece : piece_list) {
         if (piece->isAt(file, rank)) {
             return piece;
@@ -113,7 +121,7 @@ Piece* Board::get(int file, int rank) {
     return nullptr;
 }
 
-string Board::to_fen() {
+string Board::to_fen() const {
     // Return FEN representation of the current Board state.
     stringstream out;
 

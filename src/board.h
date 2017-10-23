@@ -24,23 +24,23 @@ class Board {
         Side side_to_move;
         map<char, bool> castling;
         /**
-         * The en passant target square is specified after a double push of a 
-         * pawn, no matter whether an en passant capture is really possible or 
+         * The en passant target square is specified after a double push of a
+         * pawn, no matter whether an en passant capture is really possible or
          * not.
          */
         Square * en_passant_sqr;
         /**
-         * The halfmove clock specifies a decimal number of half moves with 
-         * respect to the 50 move draw rule. It is reset to zero after a 
+         * The halfmove clock specifies a decimal number of half moves with
+         * respect to the 50 move draw rule. It is reset to zero after a
          * capture or a pawn move and incremented otherwise.
          */
         int half_move_counter;
         /**
-         * The number of the full moves in a game. It starts at 1, and is 
+         * The number of the full moves in a game. It starts at 1, and is
          * incremented after each Black's move.
          */
         int full_move_counter;
-    
+
     public:
         const int width;
         const int height;
@@ -48,14 +48,15 @@ class Board {
         Board();
         Board(int, int);
         bool place_piece(char, int, int);
-        std::string to_string();
-        Piece* get(int, int);
-        string to_fen();
+        bool place_piece(Piece &);
+        std::string to_string() const;
+        Piece* get(int, int) const;
+        string to_fen() const;
 
         // Move generation
 
         vector<Move*> getMoves();
-        
+
         // Setters
 
         void set_side_to_move(Side);

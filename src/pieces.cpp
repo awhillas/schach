@@ -1,3 +1,5 @@
+#include <iostream>  // debug
+
 #include "pieces.h"
 #include "square.h"
 #include "board.h"
@@ -12,18 +14,18 @@ Piece::~Piece() {
     delete position;
 }
 
-string Piece::to_string() {
+string Piece::to_string() const {
     if (side == Side::WHITE)
         return "White";
     else
         return "Black";
 }
 
-bool Piece::isAt(int file, int rank) {
+bool Piece::isAt(int file, int rank) const {
     return position->col == file && position->row == rank;
 }
 
-bool Piece::isAt(Square* place) {
+bool Piece::isAt(Square* place) const {
     return position == place;
 }
 
@@ -55,7 +57,7 @@ Piece * Piece::make_piece(char type, Side side, int file, int rank) {
     }
 }
 
-vector<Square*> Piece::getMoves(Board) { return vector<Square*>(); }  // TODO: isn't this redundant as its virtual???
+vector<Square*> Piece::getMoves(Board) const { return vector<Square*>(); }  // TODO: isn't this redundant as its virtual???
 
 
 //
@@ -69,19 +71,19 @@ JumpingPiece::JumpingPiece(
         vector<pair<int, int> > deltas
 ) : Piece::Piece(side, file, rank), move_deltas(deltas) {}
 
-vector<Square*> JumpingPiece::getMoves(Board board) {
-    vector<Square*> moves {};
+vector<Square*> JumpingPiece::getMoves(Board board) const {
+    vector<Square *> moves {};
     for (auto delta : move_deltas) {
         int x = position->col + delta.first;
         int y = position->row + delta.second;
-        Piece* occupier = board.get(x, y);
+        Piece * occupier = board.get(x, y);
         if (    x >= 0                              // square is within the board...
             and x < board.width
             and y >= 0
             and y < board.height
-            and occupier and occupier->side != side  // ...and no occupied by a friendly
+            and (occupier == nullptr or occupier->side != side)  // ...and not occupied by a friendly
         ) {
-            Square* sqr = new Square(x, y);
+            Square * sqr = new Square(x, y);
             moves.push_back(sqr);
         }
     }
@@ -102,15 +104,15 @@ SlidingPiece::SlidingPiece(
         vector<pair<int, int> > deltas
 ) : Piece::Piece(side, file, rank), move_deltas(deltas) {}
 
-vector<Square*> SlidingPiece::getMoves(Board board) {
-    vector<Square*> moves {};
+vector<Square *> SlidingPiece::getMoves(Board board) const {
+    vector<Square *> moves {};
     for (auto delta : move_deltas) {
         int x = position->col + delta.first;
         int y = position->row + delta.second;
         while(true) {
             if (x >= 0 and x < board.width and y >= 0 and y < board.height) {
-                Piece* occupier = board.get(x, y);
-                Square* sqr = new Square(x, y);
+                Piece * occupier = board.get(x, y);
+                Square * sqr = new Square(x, y);
                 if (occupier) {
                     if (occupier->side != side) // an attack!
                         moves.push_back(sqr);
@@ -136,11 +138,11 @@ vector<Square*> SlidingPiece::getMoves(Board board) {
 
 King::King(Side s, int x, int y) : JumpingPiece(s, x, y,
                                                 {{-1,-1},{0,-1},{1,-1},
-                                                 {-1,0}, {0,0}, {1,0},
+                                                 {-1,0},        {1,0},
                                                  {-1,1}, {0,1}, {1,1}
                                                 }) {}
 
-string King::to_string() {
+string King::to_string() const {
     return (side == Side::BLACK) ? "k" : "K" ;
 }
 
@@ -151,11 +153,11 @@ string King::to_string() {
 
 Queen::Queen(Side s, int x, int y) : SlidingPiece(s, x, y,
                                                   {{-1,-1},{0,-1},{1,-1},
-                                                   {-1,0}, {0,0}, {1,0},
+                                                   {-1,0},        {1,0},
                                                    {-1,1}, {0,1}, {1,1}
                                                   }) {}
 
-string Queen::to_string() {
+string Queen::to_string() const {
     return (side == Side::BLACK) ? "q" : "Q" ;
 }
 
@@ -166,7 +168,7 @@ string Queen::to_string() {
 
 Bishop::Bishop(Side s, int x, int y) : SlidingPiece(s, x, y, {{-1,-1}, {1,-1}, {1, -1}, {1, 1}}) {}
 
-string Bishop::to_string() {
+string Bishop::to_string() const {
     return (side == Side::BLACK) ? "b" : "B" ;
 }
 
@@ -177,7 +179,7 @@ string Bishop::to_string() {
 
 Knight::Knight(Side s, int x, int y) : JumpingPiece(s, x, y, {}) {}
 
-string Knight::to_string() {
+string Knight::to_string() const {
     return (side == Side::BLACK) ? "n" : "N" ;
 }
 
@@ -188,7 +190,7 @@ string Knight::to_string() {
 
 Rook::Rook(Side s, int x, int y) : SlidingPiece(s, x, y, {{0,-1}, {0,1}, {-1,0}, {1,0}}) {}
 
-string Rook::to_string() {
+string Rook::to_string() const {
     return (side == Side::BLACK) ? "r" : "R" ;
 }
 
@@ -199,11 +201,11 @@ string Rook::to_string() {
 
 Pawn::Pawn(Side s, int a, int b) : Piece(s,a,b) {}
 
-string Pawn::to_string() {
+string Pawn::to_string() const {
     return (side == Side::BLACK) ? "p" : "P" ;
 }
 
-vector<Square*> Pawn::getMoves(Board board) {
+vector<Square*> Pawn::getMoves(Board board) const {
     vector<Square*> moves {};
 
     // Forward depending on the side && noting occupying it

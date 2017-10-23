@@ -11,7 +11,7 @@ cc_test(
 	srcs = ["fen_test.cpp"],
 	copts = ["-Iexternal/gtest/include"],
 	deps = [
-		"@gtest//:main",
+		"@gtest//:gtest_main",
 		"//src:fen",
 	],
 )
@@ -21,7 +21,7 @@ cc_test(
 	srcs = ["piece_test.cpp"],
 	copts = ["-Iexternal/gtest/include"],
 	deps = [
-		"@gtest//:main",
+		"@gtest//:gtest_main",
 		"//src:board",
 	],
 )
@@ -31,7 +31,7 @@ cc_test(
 	srcs = ["square_test.cpp"],
 	copts = ["-Iexternal/gtest/include"],
 	deps = [
-		"@gtest//:main",
+		"@gtest//:gtest_main",
 		"//src:board",
 	],
 )
