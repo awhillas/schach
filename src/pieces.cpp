@@ -136,11 +136,11 @@ vector<Square *> SlidingPiece::getMoves(Board board) const {
 // King
 //
 
-King::King(Side s, int x, int y) : JumpingPiece(s, x, y,
-                                                {{-1,-1},{0,-1},{1,-1},
-                                                 {-1,0},        {1,0},
-                                                 {-1,1}, {0,1}, {1,1}
-                                                }) {}
+King::King(Side s, int x, int y) : JumpingPiece(s, x, y, {
+    {-1,-1}, {0,-1}, {1,-1},
+    {-1,0},          {1,0},
+    {-1,1},  {0,1},  {1,1}
+}) {}
 
 string King::to_string() const {
     return (side == Side::BLACK) ? "k" : "K" ;
@@ -151,11 +151,11 @@ string King::to_string() const {
 // Queen
 //
 
-Queen::Queen(Side s, int x, int y) : SlidingPiece(s, x, y,
-                                                  {{-1,-1},{0,-1},{1,-1},
-                                                   {-1,0},        {1,0},
-                                                   {-1,1}, {0,1}, {1,1}
-                                                  }) {}
+Queen::Queen(Side s, int x, int y) : SlidingPiece(s, x, y,{
+    {-1,-1}, {0,-1}, {1,-1},
+    {-1,0},          {1,0},
+    {-1,1},  {0,1},  {1,1}
+}) {}
 
 string Queen::to_string() const {
     return (side == Side::BLACK) ? "q" : "Q" ;
@@ -177,7 +177,12 @@ string Bishop::to_string() const {
 // Knight
 //
 
-Knight::Knight(Side s, int x, int y) : JumpingPiece(s, x, y, {}) {}
+Knight::Knight(Side s, int x, int y) : JumpingPiece(s, x, y, {
+    {-1, 2}, {1, 2},
+    {-2, 1}, {2, 1},
+    {-2,-1}, {2,-1},
+    {-1,-2}, {1,-2},
+}) {}
 
 string Knight::to_string() const {
     return (side == Side::BLACK) ? "n" : "N" ;
