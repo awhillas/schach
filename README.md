@@ -21,6 +21,12 @@ or run all the tests
 
     bazel test ... --test_output=errors
 
+### Troubleshooting Bazel builds
+
+- If getting an error that mentions "missing dependency declarations" and your toolchain had an upgrade somewhere i.e. new compiler with new copy of STD lib., try:
+
+    bazel clean --expunge
+
 
 ## `make`
 

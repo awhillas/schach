@@ -19,18 +19,18 @@ using namespace std;
 class Piece
 {
     public:
-        const Square*   position;
+        const Square *              position;
         const enum Side side;
 
-        Piece(Side, int, int);
-        ~Piece();
+                                    Piece(Side, int, int);
+                                    ~Piece();
 
-        static Piece*           make_piece(char, Side, int, int);
-        bool                    isAt(int, int) const;
-        bool                    isAt(Square*) const;
+        static Piece*               make_piece(char, Side, int, int);
+        bool                        isAt(int, int) const;
+        bool                        isAt(Square*) const;
 
-        virtual string          to_string() const;
-        virtual vector<Square*> getMoves(Board) const;
+        virtual string              to_string() const;
+        virtual vector<Square * >   getSquares(Board) const;
 };
 
 
@@ -40,8 +40,8 @@ class JumpingPiece : public Piece
         vector<pair<int, int> > move_deltas;
 
     public:
-                        JumpingPiece(Side, int, int, vector<pair<int, int> >);
-        vector<Square*> getMoves(Board) const override;
+                            JumpingPiece(Side, int, int, vector<pair<int, int> >);
+        vector<Square *>    getSquares(Board) const override;
 };
 
 
@@ -51,8 +51,8 @@ class SlidingPiece : public Piece
         vector<pair<int, int> > move_deltas;
 
     public:
-                        SlidingPiece(Side, int, int, vector<pair<int, int> >);
-        vector<Square*> getMoves(Board) const override;
+                            SlidingPiece(Side, int, int, vector<pair<int, int> >);
+        vector<Square *>    getSquares(Board) const override;
 };
 
 
@@ -99,7 +99,7 @@ class Rook : public SlidingPiece
 class Pawn : public Piece
 {
     public:
-                        Pawn(Side, int, int);
-        string          to_string() const override;
-        vector<Square*> getMoves(Board) const override;
+                         Pawn(Side, int, int);
+        string           to_string() const override;
+        vector<Square *> getSquares(Board) const override;
 };

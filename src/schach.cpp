@@ -8,14 +8,9 @@
 // #define NDEBUG
 #include <cassert>
 
+
 using namespace std;
 
-/**
-    TODO List
-    - Only get moves for the side that can move.
-    - Knight moves
-    - Pawn inital double moves.
-*/
 
 int main(int argc, char const *argv[])
 {

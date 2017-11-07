@@ -4,15 +4,12 @@
 #include "square.h"
 #include "board.h"
 #include "move.h"
+#include "squares_board.h"
 
 
 Piece::Piece(Side colour, int file, int rank) : side(colour) {
-    position = new Square(file, rank);
-}
-
-Piece::~Piece() {
-    delete position;
-}
+    position = SquaresBoard::getInstance().squares[file][rank].get();
+};
 
 string Piece::to_string() const {
     if (side == Side::WHITE)
@@ -25,8 +22,8 @@ bool Piece::isAt(int file, int rank) const {
     return position->col == file && position->row == rank;
 }
 
-bool Piece::isAt(Square* place) const {
-    return position == place;
+bool Piece::isAt(Square * place) const {
+    return *position == *place;
 }
 
 
@@ -57,7 +54,7 @@ Piece * Piece::make_piece(char type, Side side, int file, int rank) {
     }
 }
 
-vector<Square*> Piece::getMoves(Board) const { return vector<Square*>(); }  // TODO: isn't this redundant as its virtual???
+vector<Square*> Piece::getSquares(Board) const { return vector<Square*>(); }  // TODO: isn't this redundant as its virtual???
 
 
 //
@@ -71,7 +68,7 @@ JumpingPiece::JumpingPiece(
         vector<pair<int, int> > deltas
 ) : Piece::Piece(side, file, rank), move_deltas(deltas) {}
 
-vector<Square*> JumpingPiece::getMoves(Board board) const {
+vector<Square*> JumpingPiece::getSquares(Board board) const {
     vector<Square *> moves {};
     for (auto delta : move_deltas) {
         int x = position->col + delta.first;
@@ -83,7 +80,7 @@ vector<Square*> JumpingPiece::getMoves(Board board) const {
             and y < board.height
             and (occupier == nullptr or occupier->side != side)  // ...and not occupied by a friendly
         ) {
-            Square * sqr = new Square(x, y);
+            Square * sqr = SquaresBoard::get(x, y);
             moves.push_back(sqr);
         }
     }
@@ -104,7 +101,7 @@ SlidingPiece::SlidingPiece(
         vector<pair<int, int> > deltas
 ) : Piece::Piece(side, file, rank), move_deltas(deltas) {}
 
-vector<Square *> SlidingPiece::getMoves(Board board) const {
+vector<Square *> SlidingPiece::getSquares(Board board) const {
     vector<Square *> moves {};
     for (auto delta : move_deltas) {
         int x = position->col + delta.first;
@@ -112,7 +109,7 @@ vector<Square *> SlidingPiece::getMoves(Board board) const {
         while(true) {
             if (x >= 0 and x < board.width and y >= 0 and y < board.height) {
                 Piece * occupier = board.get(x, y);
-                Square * sqr = new Square(x, y);
+                Square * sqr = SquaresBoard::get(x, y);
                 if (occupier) {
                     if (occupier->side != side) // an attack!
                         moves.push_back(sqr);
@@ -210,25 +207,36 @@ string Pawn::to_string() const {
     return (side == Side::BLACK) ? "p" : "P" ;
 }
 
-vector<Square*> Pawn::getMoves(Board board) const {
-    vector<Square*> moves {};
+vector<Square *> Pawn::getSquares(Board board) const {
+    vector<Square *> moves {};
 
     // Forward depending on the side && noting occupying it
 
-    int x = position->col;
-    int y = (side == Side::WHITE) ? position->row + 1 : position->row - 1 ;
+    const int y_delta = (side == Side::WHITE) ? 1 : -1;  // dir. we're movings
+    const int y = position->row + y_delta;
+    const int x = position->col;
+
     if (y >= 0 and y < board.height) {
         if (not board.get(x, y))
-            moves.push_back(new Square(x, y));
+            moves.push_back(board.getSquare(x, y));
+
+        // Double moves from inital position
+
+        if ((side == Side::WHITE and position->row == 1) or (side == Side::BLACK and position->row == 6))
+            if(not board.get(x, y + y_delta))
+                moves.push_back(board.getSquare(x, y + y_delta));
 
         // Attack left & right
-        Piece* occupier = board.get(x - 1, y);
-        if (occupier and occupier->side != side)
-            moves.push_back(new Square(x - 1, y));
 
-        occupier = board.get(x - 1, y);
+        auto occupier = board.get(x - 1, y);  // left
+        cout << "Pawn::getSquares: " << occupier->to_string() << endl;
         if (occupier and occupier->side != side)
-            moves.push_back(new Square(x - 1, y));
+            moves.push_back(board.getSquare(x - 1, y));
+
+        occupier = board.get(x + 1, y);  // right
+        if (occupier and occupier->side != side)
+            moves.push_back(board.getSquare(x - 1, y));
+
     }
     return moves;
 }

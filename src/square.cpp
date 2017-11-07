@@ -2,6 +2,7 @@
 #include <stdexcept>
 
 #include "square.h"
+#include "squares_board.h"
 
 
 Square::Square(int file, int rank) : col(file), row(rank) {};
@@ -23,7 +24,7 @@ Square * Square::from_algebratic(std::string str) {
 		int col = str[0] - 'a';
 		if (str[1] >= '1' && str[1] <= '8') {
 			int row = str[1] - '1';
-			return new Square(col, row);
+			return SquaresBoard::get(col, row);
 		}
 		else {
 			throw std::range_error(std::string("Bad rank in algebraic notation: ") + str[1]);

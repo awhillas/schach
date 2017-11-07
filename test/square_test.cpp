@@ -29,11 +29,11 @@ TEST(Square, equality_operator) {
 }
 
 TEST(Square, from_algebratic) {
-	Square * s1 = Square::from_algebratic("a8");
+	auto s1 = Square::from_algebratic("a8");
 	EXPECT_EQ(s1->col, 0);
 	EXPECT_EQ(s1->row, 7);
 
-	Square * s2 = Square::from_algebratic("h1");
+	auto s2 = Square::from_algebratic("h1");
 	EXPECT_EQ(s2->col, 7);
 	EXPECT_EQ(s2->row, 0);
 

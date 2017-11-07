@@ -3,12 +3,6 @@
 #include "move.h"
 #include "square.h"
 
-using namespace std;
-
-
-#define WIDTH 8
-#define HEIGHT 8
-
 
 Board::Board() : width(WIDTH), height(HEIGHT) {};
 
@@ -64,7 +58,8 @@ void Board::set_side_has_castled(Side side) {
 }
 
 void Board::set_en_passant_target_square(string ep_square) {
-    en_passant_sqr = Square::from_algebratic(ep_square);
+    auto sqr = Square::from_algebratic(ep_square);
+    en_passant_sqr = SquaresBoard::get(sqr->col, sqr->row);
 }
 
 void Board::set_half_move_counter(int count) {
@@ -112,13 +107,17 @@ string Board::to_string() const {
 /**
  * Get piece at given Position
  */
-Piece* Board::get(int file, int rank) const {
-    for (Piece* piece : piece_list) {
+Piece * Board::get(int file, int rank) const {
+    for (auto piece : piece_list) {
         if (piece->isAt(file, rank)) {
             return piece;
         }
     }
     return nullptr;
+}
+
+Square * Board::getSquare(int file, int rank) const {
+    return SquaresBoard::get(file, rank);
 }
 
 string Board::to_fen() const {
@@ -179,7 +178,7 @@ vector<Move *> Board::getMoves() {
     vector<Move*> moves {};
     for(auto& piece : piece_list) {
         if (piece->side == side_to_move) {
-            auto places = piece->getMoves(*this);
+            auto places = piece->getSquares(*this);
             for (auto& sqr : places) {
                 moves.push_back(new Move(piece, sqr));
             }
