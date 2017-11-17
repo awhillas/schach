@@ -1,10 +1,11 @@
 #include "gtest/gtest.h"
+
 #include "src/fen.h"
 
 
 class FENTest : public ::testing::Test {
  protected:
-//   virtual void SetUp() {}
+  // virtual void SetUp() {}
 
 //   virtual void TearDown() {}
 };

@@ -1,14 +1,10 @@
-#include <iostream>  // debug
+#include <iostream>
 
 #include "pieces.h"
-#include "square.h"
-#include "board.h"
-#include "move.h"
-#include "squares_board.h"
 
 
 Piece::Piece(Side colour, int file, int rank) : side(colour) {
-    position = SquaresBoard::getInstance().squares[file][rank].get();
+    position = SquaresBoard::get(file, rank);
 };
 
 string Piece::to_string() const {
@@ -50,11 +46,13 @@ Piece * Piece::make_piece(char type, Side side, int file, int rank) {
             return new Pawn(side, file, rank);
         default:
             throw invalid_argument("Unknown piece type");
-            return NULL;
     }
+    return nullptr;
 }
 
-vector<Square*> Piece::getSquares(Board) const { return vector<Square*>(); }  // TODO: isn't this redundant as its virtual???
+vector<Square *> Piece::getSquares(Board b) const { return vector<Square *>(); }
+
+
 
 
 //
@@ -144,6 +142,7 @@ string King::to_string() const {
 }
 
 
+
 //
 // Queen
 //
@@ -159,6 +158,7 @@ string Queen::to_string() const {
 }
 
 
+
 //
 // Bishop
 //
@@ -168,6 +168,7 @@ Bishop::Bishop(Side s, int x, int y) : SlidingPiece(s, x, y, {{-1,-1}, {1,-1}, {
 string Bishop::to_string() const {
     return (side == Side::BLACK) ? "b" : "B" ;
 }
+
 
 
 //
@@ -186,6 +187,7 @@ string Knight::to_string() const {
 }
 
 
+
 //
 // Rook
 //
@@ -195,6 +197,7 @@ Rook::Rook(Side s, int x, int y) : SlidingPiece(s, x, y, {{0,-1}, {0,1}, {-1,0},
 string Rook::to_string() const {
     return (side == Side::BLACK) ? "r" : "R" ;
 }
+
 
 
 //

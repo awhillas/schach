@@ -13,7 +13,13 @@ cc_library(
 
 cc_library(
 	name = "board",
-	srcs = ["board.cpp", "pieces.cpp", "move.cpp", "square.cpp"],
+	srcs = [
+        "board.cpp",
+        "move.cpp",
+        "pieces.cpp",
+        "square.cpp",
+        "squares_board.cpp",
+    ],
 	hdrs = [
         "board.h",
         "chess.h",
