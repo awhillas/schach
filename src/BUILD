@@ -11,6 +11,12 @@ cc_library(
 	visibility = ["//visibility:public"],
 )
 
+# cc_library(
+# 	name = "board2",
+# 	srcs = glob(["*.cpp", "*.h"]),
+# 	visibility = ["//visibility:public"],
+# )
+
 cc_library(
 	name = "board",
 	srcs = [
