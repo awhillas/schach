@@ -1,5 +1,5 @@
-#include "squares_board.h"
-#include "square.h"
+#include "squares_board.hpp"
+#include "square.hpp"
 
 SquaresBoard::SquaresBoard() {
     for (int x = 0; x < width; ++x)

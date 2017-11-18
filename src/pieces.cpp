@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "square.h"
-#include "pieces.h"
-#include "board.h"
-#include "squares_board.h"
+#include "square.hpp"
+#include "pieces.hpp"
+#include "board.hpp"
+#include "squares_board.hpp"
 
 
 using namespace std;

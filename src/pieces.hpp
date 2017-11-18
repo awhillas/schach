@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "side.h"
+#include "side.hpp"
 
 
 // Forward declarations

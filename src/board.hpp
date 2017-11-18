@@ -6,8 +6,8 @@
 #include <sstream>
 #include <map>
 
-#include "chess.h"
-#include "side.h"
+#include "chess.hpp"
+#include "side.hpp"
 
 
 // Forward declerations

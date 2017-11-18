@@ -1,12 +1,12 @@
 cc_binary(
 	name = "schach",
-	srcs = glob(["*.cpp", "*.h"]),
+	srcs = glob(["*.cpp", "*.hpp"]),
 )
 
 cc_library(
 	name = "fen",
 	srcs = ["fen.cpp"],
-	hdrs = ["fen.h"],
+	hdrs = ["fen.hpp"],
 	deps = [":board"],
 	visibility = ["//visibility:public"],
 )
@@ -27,14 +27,14 @@ cc_library(
         "squares_board.cpp",
     ],
 	hdrs = [
-        "board.h",
-        "chess.h",
-        "move.h",
-        "pieces.h",
-        "side.h",
-        "split.h",
-        "square.h",
-        "squares_board.h",
+        "board.hpp",
+        "chess.hpp",
+        "move.hpp",
+        "pieces.hpp",
+        "side.hpp",
+        "split.hpp",
+        "square.hpp",
+        "squares_board.hpp",
     ],
 	visibility = ["//visibility:public"],
 )

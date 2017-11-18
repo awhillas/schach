@@ -1,8 +1,8 @@
-#include "board.h"
-#include "pieces.h"
-#include "move.h"
-#include "square.h"
-#include "squares_board.h"
+#include "board.hpp"
+#include "pieces.hpp"
+#include "move.hpp"
+#include "square.hpp"
+#include "squares_board.hpp"
 
 
 using namespace std;

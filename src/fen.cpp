@@ -1,5 +1,5 @@
-#include "fen.h"
-#include "split.h"
+#include "fen.hpp"
+#include "split.hpp"
 
 #include <cstring>
 

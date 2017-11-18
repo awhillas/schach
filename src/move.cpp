@@ -1,8 +1,8 @@
 #include <string>
 
-#include "move.h"
-#include "pieces.h"
-#include "square.h"
+#include "move.hpp"
+#include "pieces.hpp"
+#include "square.hpp"
 
 
 Move::Move(Piece *p, Square *s) : piece(p), to(s){};

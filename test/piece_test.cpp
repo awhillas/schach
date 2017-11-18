@@ -3,8 +3,8 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 //
-#include "src/pieces.h"
-#include "src/side.h"
+#include "src/pieces.hpp"
+#include "src/side.hpp"
 // #include "src/board.h"
 // #include "src/square.h"
 //

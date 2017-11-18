@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "chess.h"
+#include "chess.hpp"
 
 class Square;
 

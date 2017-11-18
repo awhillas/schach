@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "src/fen.h"
+#include "src/fen.hpp"
 
 using namespace std;
 

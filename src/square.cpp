@@ -1,8 +1,8 @@
 #include <string>
 #include <stdexcept>
 
-#include "square.h"
-#include "squares_board.h"
+#include "square.hpp"
+#include "squares_board.hpp"
 
 
 Square::Square(int file, int rank) : col(file), row(rank) {};

@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 
-#include "fen.h"
-#include "move.h"
+#include "fen.hpp"
+#include "move.hpp"
 
 // uncomment to disable assert()
 // #define NDEBUG
