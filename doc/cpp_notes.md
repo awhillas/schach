@@ -1,5 +1,33 @@
 # Alex's C++ notes
 
+## Forward declarations
+
+- Help break cyclic dependancies.
+- Significantly reduce build times.
+
+foo.h
+
+    class bar;    // This is useful
+    class foo
+    {
+        bar* obj; // Pointer or even a reference.
+    };
+
+foo.cpp
+
+    #include "bar.h"
+    #include "foo.h"
+
+bar.h
+
+    class foo;   // This is also useful
+
+bar.cpp
+
+    #include "foo.h"
+    #include "bar.h"
+
+
 ## Call with pointer vs call by reference
 
     func(SPRITE \*x);

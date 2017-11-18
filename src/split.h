@@ -1,6 +1,12 @@
 #pragma once
 
-template<typename T>
-void split(const string &s, char delim, T result);
+#include <vector>
+#include <string>
+#include <sstream>
+#include <iterator>
 
-vector<string> split(const string &s, char delim);
+
+template<typename T>
+void split(const std::string &s, char delim, T result);
+
+std::vector<std::string> split(const std::string &s, char delim);

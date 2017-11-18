@@ -1,9 +1,10 @@
 #include "squares_board.h"
+#include "square.h"
 
 SquaresBoard::SquaresBoard() {
     for (int x = 0; x < width; ++x)
         for (int y = 0; y < height; ++y)
-            squares[x][y] = unique_ptr<Square>(new Square(x, y));
+            squares[x][y] = std::unique_ptr<Square>(new Square(x, y));
 }
 
 SquaresBoard& SquaresBoard::getInstance() {

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <vector>
 #include <stdexcept>
 #include <string>
@@ -9,22 +8,20 @@
 
 #include "chess.h"
 #include "side.h"
-#include "squares_board.h"
+
 
 // Forward declerations
 class Piece;
 class Move;
 class Square;
-
-
-using namespace std;
+class SquaresBoard;
 
 
 class Board {
     private:
-        vector<Piece *> piece_list;
-        Side            side_to_move;
-        map<char, bool> castling;
+        std::vector<Piece *>    piece_list;
+        Side                    side_to_move;
+        std::map<char, bool>    castling;
         /**
          * The en passant target square is specified after a double push of a
          * pawn, no matter whether an en passant capture is really possible or
@@ -44,28 +41,28 @@ class Board {
         int             full_move_counter;
 
     public:
-        const int   width;
-        const int   height;
+        const int           width;
+        const int           height;
 
-                    Board();
-                    Board(int, int);
-        bool        place_piece(char, int, int);
-        bool        place_piece(Piece &);
-        string      to_string() const;
-        Piece *     get(int, int) const;
-        Square *    getSquare(int, int) const;
-        string      to_fen() const;
+                            Board();
+                            Board(int, int);
+        bool                place_piece(char, int, int);
+        bool                place_piece(Piece &);
+        std::string         to_string() const;
+        Piece *             get(int, int) const;
+        Square *            getSquare(int, int) const;
+        std::string         to_fen() const;
 
         // Move generation
 
-        vector<Move*> getMoves();
+        std::vector<Move*>  getMoves();
 
         // Setters
 
         void set_side_to_move(Side);
         void set_castling(char, bool);
         void set_side_has_castled(Side);
-        void set_en_passant_target_square(string);
+        void set_en_passant_target_square(std::string);
         void set_half_move_counter(int);
         void set_full_move_counter(int);
 };

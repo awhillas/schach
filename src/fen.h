@@ -46,16 +46,15 @@ applications as part of the Portable Game Notation (PGN).
 class FENParser {
 	private:
 		std::string original_fen;
-		void parse_piece_placement(std::vector<string>, Board*);
+		void parse_piece_placement(std::vector<std::string>, Board*);
 		void parse_side_to_move(std::string, Board*);
-		void parse_castling_ability(string, Board*);
-		void parse_en_passant_target_square(string, Board*);
-        void parse_halfmove_clock(string, Board*);
-        void parse_fullmove_counter(string fllmvc, Board *board);
+		void parse_castling_ability(std::string, Board*);
+		void parse_en_passant_target_square(std::string, Board*);
+        void parse_halfmove_clock(std::string, Board*);
+        void parse_fullmove_counter(std::string fllmvc, Board *board);
 
 	public:
 		FENParser(std::string);
 		std::string getOriginalFEN() const;
 		Board* parse();
-
 };

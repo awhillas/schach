@@ -3,6 +3,9 @@
 #include "src/square.h"
 
 
+using namespace std;
+
+
 TEST(Square, DefaultConstructor) {
 	const Square s {3, 4};
 	EXPECT_EQ(s.col, 3);

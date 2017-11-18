@@ -2,6 +2,10 @@
 #include "pieces.h"
 #include "move.h"
 #include "square.h"
+#include "squares_board.h"
+
+
+using namespace std;
 
 
 Board::Board() : width(WIDTH), height(HEIGHT) {};

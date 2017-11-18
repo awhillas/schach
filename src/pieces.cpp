@@ -1,6 +1,12 @@
 #include <iostream>
 
+#include "square.h"
 #include "pieces.h"
+#include "board.h"
+#include "squares_board.h"
+
+
+using namespace std;
 
 
 Piece::Piece(Side colour, int file, int rank) : side(colour) {

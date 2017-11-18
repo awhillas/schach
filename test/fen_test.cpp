@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
-
 #include "src/fen.h"
+
+using namespace std;
 
 
 class FENTest : public ::testing::Test {
