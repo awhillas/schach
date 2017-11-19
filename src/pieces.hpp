@@ -17,7 +17,7 @@ public:
     const enum Side                 side;
 
                                     Piece(Side, int, int);
-                                    ~Piece();
+    virtual                         ~Piece();
 
     static Piece *                  make_piece(char, Side, int, int);
     bool                            isAt(int, int) const;

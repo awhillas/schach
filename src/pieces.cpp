@@ -9,6 +9,8 @@
 using namespace std;
 
 
+Piece::~Piece() {}
+
 Piece::Piece(Side colour, int file, int rank) : side(colour) {
     position = SquaresBoard::get(file, rank);
 };
