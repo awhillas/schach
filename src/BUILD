@@ -25,6 +25,7 @@ cc_library(
         "pieces.cpp",
         "square.cpp",
         "squares_board.cpp",
+        "split.cpp",
     ],
 	hdrs = [
         "board.hpp",
