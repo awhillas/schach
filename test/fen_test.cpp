@@ -4,14 +4,6 @@
 using namespace std;
 
 
-class FENTest : public ::testing::Test {
- protected:
-  // virtual void SetUp() {}
-
-//   virtual void TearDown() {}
-};
-
-
 TEST(FENTest, getOriginalFEN)
 {
     const string std_start_pos_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
