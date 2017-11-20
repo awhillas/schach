@@ -212,7 +212,7 @@ string Rook::to_string() const {
 // Pawn
 //
 
-Pawn::Pawn(Side s, int a, int b) : Piece(s,a,b) {}
+Pawn::Pawn(Side s, int a, int b) : Piece(s, a, b) {}
 
 string Pawn::to_string() const {
     return (side == Side::BLACK) ? "p" : "P" ;
@@ -221,7 +221,7 @@ string Pawn::to_string() const {
 vector<Square *> Pawn::getSquares(Board board) const {
     vector<Square *> moves {};
 
-    // Forward depending on the side && noting occupying it
+    // Forward depending on the side && nothing occupying it
 
     const int y_delta = (side == Side::WHITE) ? 1 : -1;  // dir. we're movings
     const int y = position->row + y_delta;
@@ -240,13 +240,12 @@ vector<Square *> Pawn::getSquares(Board board) const {
         // Attack left & right
 
         auto occupier = board.get(x - 1, y);  // left
-        cout << "Pawn::getSquares: " << occupier->to_string() << endl;
         if (occupier and occupier->side != side)
             moves.push_back(board.getSquare(x - 1, y));
 
         occupier = board.get(x + 1, y);  // right
         if (occupier and occupier->side != side)
-            moves.push_back(board.getSquare(x - 1, y));
+            moves.push_back(board.getSquare(x + 1, y));
 
     }
     return moves;

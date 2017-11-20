@@ -27,18 +27,18 @@ class Board {
          * pawn, no matter whether an en passant capture is really possible or
          * not.
          */
-        Square *        en_passant_sqr;
+        Square *                en_passant_sqr;
         /**
          * The halfmove clock specifies a decimal number of half moves with
          * respect to the 50 move draw rule. It is reset to zero after a
          * capture or a pawn move and incremented otherwise.
          */
-        int             half_move_counter;
+        int                     half_move_counter;
         /**
          * The number of the full moves in a game. It starts at 1, and is
          * incremented after each Black's move.
          */
-        int             full_move_counter;
+        int                     full_move_counter;
 
     public:
         const int           width;
@@ -46,7 +46,7 @@ class Board {
 
                             Board();
                             Board(int, int);
-        bool                place_piece(char, int, int);
+        Piece *             place_piece(char, int, int);
         bool                place_piece(Piece &);
         std::string         to_string() const;
         Piece *             get(int, int) const;

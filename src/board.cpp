@@ -21,10 +21,14 @@ Board::Board(int w, int h) : width(w), height(h) {
     full_move_counter = 0;
  };
 
-bool Board::place_piece(char type, int file, int rank) {
+Piece * Board::place_piece(char type, int file, int rank) {
     Side side = isupper(type) ? Side::WHITE : Side::BLACK;
     Piece * NewPiece = Piece::make_piece(type, side, file, rank);
-    return this->place_piece(*NewPiece);
+    if(this->place_piece(*NewPiece)) {
+        return NewPiece;
+    } else {
+        return nullptr;
+    }
 }
 
 bool Board::place_piece(Piece & piece) {
@@ -33,9 +37,12 @@ bool Board::place_piece(Piece & piece) {
         || piece.position->row < 0
         || piece.position->row >= height
     )
-        throw invalid_argument( string("Can not place a piece :(") ); // + std::to_string(y + 1) + ", " + ('a' + x) );
+        throw invalid_argument( string("Can not place a piece :(") );
 
-    piece_list.push_back(&piece);
+    // TODO: Check that the square is not occupided... need to make sqaure aware of piece.
+    // Square sqr = SquaresBoard::get(sqr->col, sqr->row);
+
+    piece_list.push_back(&piece);  // thus piece can't be const :-/
     return true;
 }
 
