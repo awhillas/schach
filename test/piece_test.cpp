@@ -309,9 +309,8 @@ TEST_F(PieceTest, RookUpperMiddle) {
 }
 
 TEST_F(PieceTest, RookTakingAllDirections) {
-    Rook r = Rook { Side::WHITE, 1, 1 };  // b2
-    b.place_piece(r);
-    // Completely surounded
+    Piece * p = b.place_piece('R', 1, 1);  // b2
+    // Completely surrounded
     b.place_piece('p', 0, 0);
     b.place_piece('p', 1, 0);
     b.place_piece('p', 2, 0);
@@ -320,7 +319,7 @@ TEST_F(PieceTest, RookTakingAllDirections) {
     b.place_piece('p', 0, 2);
     b.place_piece('p', 1, 2);
     b.place_piece('p', 2, 2);
-    auto squares = r.getSquares(b);
+    auto squares = p->getSquares(b);
     EXPECT_EQ(4, squares.size());
 
     string test_strip = vector_to_string(squares);
@@ -337,19 +336,116 @@ Bishop testing
 *******************************************************************************/
 
 TEST_F(PieceTest, BishopLowerLeftCorner) {
+    Bishop bshp = Bishop { Side::BLACK, 0, 0 };  // a1
+    b.place_piece(bshp);
+    auto squares = bshp.getSquares(b);
+    EXPECT_EQ(7, squares.size());
 
+    string test_strip = vector_to_string(squares);
+    // Forward along A file
+    EXPECT_THAT(test_strip, HasSubstr("b2"));
+    EXPECT_THAT(test_strip, HasSubstr("c3"));
+    EXPECT_THAT(test_strip, HasSubstr("d4"));
+    EXPECT_THAT(test_strip, HasSubstr("e5"));
+    EXPECT_THAT(test_strip, HasSubstr("f6"));
+    EXPECT_THAT(test_strip, HasSubstr("g7"));
+    EXPECT_THAT(test_strip, HasSubstr("h8"));
+}
+
+TEST_F(PieceTest, BishopUpperLeftCorner) {
+    Bishop bshp = Bishop { Side::BLACK, 0, 7 };  // a8
+    b.place_piece(bshp);
+    auto squares = bshp.getSquares(b);
+    EXPECT_EQ(7, squares.size());
+
+    string test_strip = vector_to_string(squares);
+    // Forward along A file
+    EXPECT_THAT(test_strip, HasSubstr("b7"));
+    EXPECT_THAT(test_strip, HasSubstr("c6"));
+    EXPECT_THAT(test_strip, HasSubstr("d5"));
+    EXPECT_THAT(test_strip, HasSubstr("e4"));
+    EXPECT_THAT(test_strip, HasSubstr("f3"));
+    EXPECT_THAT(test_strip, HasSubstr("g2"));
+    EXPECT_THAT(test_strip, HasSubstr("h1"));
 }
 
 TEST_F(PieceTest, BishopUpperRightCorner) {
+    Bishop bshp = Bishop { Side::BLACK, 7, 7 };  // a8
+    b.place_piece(bshp);
+    auto squares = bshp.getSquares(b);
+    EXPECT_EQ(7, squares.size());
 
+    string test_strip = vector_to_string(squares);
+    // Forward along A file
+    EXPECT_THAT(test_strip, HasSubstr("a1"));
+    EXPECT_THAT(test_strip, HasSubstr("b2"));
+    EXPECT_THAT(test_strip, HasSubstr("c3"));
+    EXPECT_THAT(test_strip, HasSubstr("d4"));
+    EXPECT_THAT(test_strip, HasSubstr("e5"));
+    EXPECT_THAT(test_strip, HasSubstr("f6"));
+    EXPECT_THAT(test_strip, HasSubstr("g7"));
 }
 
-TEST_F(PieceTest, BishopUpperMiddle) {
+TEST_F(PieceTest, BishopLowerRightCorner) {
+    Bishop bshp = Bishop { Side::BLACK, 7, 0 };  // h1
+    b.place_piece(bshp);
+    auto squares = bshp.getSquares(b);
+    EXPECT_EQ(7, squares.size());
 
+    string test_strip = vector_to_string(squares);
+    // Forward along A file
+    EXPECT_THAT(test_strip, HasSubstr("a8"));
+    EXPECT_THAT(test_strip, HasSubstr("b7"));
+    EXPECT_THAT(test_strip, HasSubstr("c6"));
+    EXPECT_THAT(test_strip, HasSubstr("d5"));
+    EXPECT_THAT(test_strip, HasSubstr("e4"));
+    EXPECT_THAT(test_strip, HasSubstr("f3"));
+    EXPECT_THAT(test_strip, HasSubstr("g2"));
+}
+
+TEST_F(PieceTest, BishopMiddle) {
+    Piece * p = b.place_piece('b', 3, 3); // d4
+    auto squares = p->getSquares(b);
+    EXPECT_EQ(3 + 3 + 4 + 3, squares.size());
+
+    string test_strip = vector_to_string(squares);
+    // diagonal lower-left to upper-right
+    EXPECT_THAT(test_strip, HasSubstr("a1"));
+    EXPECT_THAT(test_strip, HasSubstr("b2"));
+    EXPECT_THAT(test_strip, HasSubstr("c3"));
+    EXPECT_THAT(test_strip, HasSubstr("e5"));
+    EXPECT_THAT(test_strip, HasSubstr("f6"));
+    EXPECT_THAT(test_strip, HasSubstr("g7"));
+    EXPECT_THAT(test_strip, HasSubstr("h8"));
+    // diagonal upper-left to lower-right
+    EXPECT_THAT(test_strip, HasSubstr("a7"));
+    EXPECT_THAT(test_strip, HasSubstr("b6"));
+    EXPECT_THAT(test_strip, HasSubstr("c5"));
+    EXPECT_THAT(test_strip, HasSubstr("e3"));
+    EXPECT_THAT(test_strip, HasSubstr("f2"));
+    EXPECT_THAT(test_strip, HasSubstr("g1"));
 }
 
 TEST_F(PieceTest, BishopTakingAllDirections) {
+    Piece * p = b.place_piece('B', 1, 1);
+    // Completely surrounded
+    b.place_piece('p', 0, 0);
+    b.place_piece('p', 1, 0);
+    b.place_piece('p', 2, 0);
+    b.place_piece('p', 0, 1);
+    b.place_piece('p', 2, 1);
+    b.place_piece('p', 0, 2);
+    b.place_piece('p', 1, 2);
+    b.place_piece('p', 2, 2);
+    auto squares = p->getSquares(b);
+    EXPECT_EQ(4, squares.size());
 
+    string test_strip = vector_to_string(squares);
+    // Along D file
+    EXPECT_THAT(test_strip, HasSubstr("a1"));
+    EXPECT_THAT(test_strip, HasSubstr("c1"));
+    EXPECT_THAT(test_strip, HasSubstr("a3"));
+    EXPECT_THAT(test_strip, HasSubstr("c3"));
 }
 
 /*******************************************************************************
@@ -357,17 +453,93 @@ Queen testing
 *******************************************************************************/
 
 TEST_F(PieceTest, QueenLowerLeftCorner) {
+    auto squares = b.place_piece('Q', 0, 0)->getSquares(b);
+    EXPECT_EQ(21, squares.size());
 
+    string test_strip = vector_to_string(squares);
+    // Forward along A file
+    EXPECT_THAT(test_strip, HasSubstr("a2"));
+    EXPECT_THAT(test_strip, HasSubstr("a3"));
+    EXPECT_THAT(test_strip, HasSubstr("a4"));
+    EXPECT_THAT(test_strip, HasSubstr("a5"));
+    EXPECT_THAT(test_strip, HasSubstr("a6"));
+    EXPECT_THAT(test_strip, HasSubstr("a7"));
+    EXPECT_THAT(test_strip, HasSubstr("a8"));
+    // right along 1st rank
+    EXPECT_THAT(test_strip, HasSubstr("b1"));
+    EXPECT_THAT(test_strip, HasSubstr("c1"));
+    EXPECT_THAT(test_strip, HasSubstr("d1"));
+    EXPECT_THAT(test_strip, HasSubstr("e1"));
+    EXPECT_THAT(test_strip, HasSubstr("f1"));
+    EXPECT_THAT(test_strip, HasSubstr("g1"));
+    EXPECT_THAT(test_strip, HasSubstr("h1"));
+    // diagonal
+    EXPECT_THAT(test_strip, HasSubstr("b2"));
+    EXPECT_THAT(test_strip, HasSubstr("c3"));
+    EXPECT_THAT(test_strip, HasSubstr("d4"));
+    EXPECT_THAT(test_strip, HasSubstr("e5"));
+    EXPECT_THAT(test_strip, HasSubstr("f6"));
+    EXPECT_THAT(test_strip, HasSubstr("g7"));
+    EXPECT_THAT(test_strip, HasSubstr("h8"));
+}
+
+TEST_F(PieceTest, QueenUpperLeftCorner) {
+    auto squares = b.place_piece('Q', 0, 7)->getSquares(b);  // a8
+    EXPECT_EQ(21, squares.size());
+
+    string test_strip = vector_to_string(squares);
+    // Forward along A file
+    EXPECT_THAT(test_strip, HasSubstr("b7"));
+    EXPECT_THAT(test_strip, HasSubstr("c6"));
+    EXPECT_THAT(test_strip, HasSubstr("d5"));
+    EXPECT_THAT(test_strip, HasSubstr("e4"));
+    EXPECT_THAT(test_strip, HasSubstr("f3"));
+    EXPECT_THAT(test_strip, HasSubstr("g2"));
+    EXPECT_THAT(test_strip, HasSubstr("h1"));
 }
 
 TEST_F(PieceTest, QueenUpperRightCorner) {
+    auto squares = b.place_piece('Q', 7, 7)->getSquares(b);  // h8
+    EXPECT_EQ(21, squares.size());
 
+    string test_strip = vector_to_string(squares);
+    // Backward along H file
+    EXPECT_THAT(test_strip, HasSubstr("h1"));
+    EXPECT_THAT(test_strip, HasSubstr("h2"));
+    EXPECT_THAT(test_strip, HasSubstr("h3"));
+    EXPECT_THAT(test_strip, HasSubstr("h4"));
+    EXPECT_THAT(test_strip, HasSubstr("h5"));
+    EXPECT_THAT(test_strip, HasSubstr("h6"));
+    EXPECT_THAT(test_strip, HasSubstr("h7"));
+    // Left along 8th rank
+    EXPECT_THAT(test_strip, HasSubstr("a8"));
+    EXPECT_THAT(test_strip, HasSubstr("b8"));
+    EXPECT_THAT(test_strip, HasSubstr("c8"));
+    EXPECT_THAT(test_strip, HasSubstr("d8"));
+    EXPECT_THAT(test_strip, HasSubstr("e8"));
+    EXPECT_THAT(test_strip, HasSubstr("f8"));
+    EXPECT_THAT(test_strip, HasSubstr("g8"));
+    // diagonal
+    EXPECT_THAT(test_strip, HasSubstr("a1"));
+    EXPECT_THAT(test_strip, HasSubstr("b2"));
+    EXPECT_THAT(test_strip, HasSubstr("c3"));
+    EXPECT_THAT(test_strip, HasSubstr("d4"));
+    EXPECT_THAT(test_strip, HasSubstr("e5"));
+    EXPECT_THAT(test_strip, HasSubstr("f6"));
+    EXPECT_THAT(test_strip, HasSubstr("g7"));
 }
 
-TEST_F(PieceTest, QueenUpperMiddle) {
+TEST_F(PieceTest, QueenLowerRightCorner) {
+    auto squares = b.place_piece('Q', 7, 0)->getSquares(b);  // h1
+    EXPECT_EQ(21, squares.size());
 
-}
-
-TEST_F(PieceTest, QueenTakingAllDirections) {
-
+    string test_strip = vector_to_string(squares);
+    // diagonal
+    EXPECT_THAT(test_strip, HasSubstr("a8"));
+    EXPECT_THAT(test_strip, HasSubstr("b7"));
+    EXPECT_THAT(test_strip, HasSubstr("c6"));
+    EXPECT_THAT(test_strip, HasSubstr("d5"));
+    EXPECT_THAT(test_strip, HasSubstr("e4"));
+    EXPECT_THAT(test_strip, HasSubstr("f3"));
+    EXPECT_THAT(test_strip, HasSubstr("g2"));
 }

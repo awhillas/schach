@@ -171,7 +171,7 @@ string Queen::to_string() const {
 // Bishop
 //
 
-Bishop::Bishop(Side s, int x, int y) : SlidingPiece(s, x, y, {{-1,-1}, {1,-1}, {1, -1}, {1, 1}}) {}
+Bishop::Bishop(Side s, int x, int y) : SlidingPiece(s, x, y, {{-1,-1}, {1,-1}, {-1, 1}, {1, 1}}) {}
 
 string Bishop::to_string() const {
     return (side == Side::BLACK) ? "b" : "B" ;
