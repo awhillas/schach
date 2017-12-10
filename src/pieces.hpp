@@ -12,16 +12,20 @@ class SquaresBoard;
 
 
 class Piece {
+protected:
+    Square *                        position;
+
 public:
-    const Square *                  position;
     const enum Side                 side;
 
                                     Piece(Side, int, int);
     virtual                         ~Piece();
 
     static Piece *                  make_piece(char, Side, int, int);
+    void                            set(Square *);
+    Square *                        getPosition();
     bool                            isAt(int, int) const;
-    bool                            isAt(Square*) const;
+    bool                            isAt(Square *) const;
 
     virtual std::string             to_string() const;
     virtual std::vector<Square *>   getSquares(Board) const;

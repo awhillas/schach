@@ -6,20 +6,41 @@
 // Forward declarations.
 class Square;
 class Piece;
+class Board;
 
-using namespace std;
+/*
+    Move interface. Also a simple move of a piece from one empty square to another.
+    Follows the _Command Design Pattern_ to allow different kinds of Moves and
+    allows 'undo' so Board does not need to be cloned to search the move tree.
 
+    - A Move needs to be displayed independantly of the Board and Piece state so
+      the from and to Squares are recorded as well as the Piece moved.
+    - The Board passed is assumed to be
+*/
+class Move {
+protected:
+    Board *     board;
+    Piece *     piece;
+    Square *    from;
+    Square *    to;
 
-class Move
-{
-    private:
-        Piece*  piece;
-        Square* to;
-        bool    isCapture;
+public:
+                            Move(Board *, Piece *, Square *);
+                            Move(Board *, Square *, Square *);
+    virtual                 ~Move();
+    virtual std::string     to_string();
+    virtual void            make();   // Command execute
+    virtual void            unmake(); // Command undo
+    Piece *                 getPiece();
+    Square *                getFrom();
+    Square *                getTo();
 
-    public:
-        Move(Piece*, Square*);
-        string          to_string();
-        bool            getIsCapture();
-        vector<Square*>   getMoves();
 };
+
+/*
+class EnPassant : public Move {
+public:
+    bool make() override;
+    bool unmake() override;
+};
+*/

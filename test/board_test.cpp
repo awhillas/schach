@@ -37,7 +37,7 @@ TEST_F(BoardTest, PlacePieceMethodPassPieceVersion)
     Piece * ptr = b.get(4, 4);
 
     ASSERT_EQ(&p, ptr);  // same object
-    ASSERT_EQ(p.position, ptr->position);
+    ASSERT_EQ(p.getPosition(), ptr->getPosition());
 }
 
 TEST_F(BoardTest, PlacePieceMethodFactoryVersion)
@@ -46,5 +46,5 @@ TEST_F(BoardTest, PlacePieceMethodFactoryVersion)
     Piece * ptr = b.get(4, 4);
 
     ASSERT_EQ(p, ptr);  // same object
-    ASSERT_EQ(p->position, ptr->position);
+    ASSERT_EQ(p->getPosition(), ptr->getPosition());
 }

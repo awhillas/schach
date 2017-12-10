@@ -37,3 +37,13 @@ cc_test(
 		"//src:board",
 	],
 )
+
+cc_test(
+	name = "move_test",
+	srcs = ["move_test.cpp"],
+	copts = ["-Iexternal/gtest/include"],
+	deps = [
+		"@gtest//:gtest_main",
+		"//src:board",
+	],
+)

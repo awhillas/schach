@@ -46,11 +46,12 @@ class Board {
 
                             Board();
                             Board(int, int);
+
+        Piece *             get(int, int) const;
+        Square *            getSquare(int, int) const;
         Piece *             place_piece(char, int, int);
         bool                place_piece(Piece &);
         std::string         to_string() const;
-        Piece *             get(int, int) const;
-        Square *            getSquare(int, int) const;
         std::string         to_fen() const;
 
         // Move generation
@@ -59,10 +60,10 @@ class Board {
 
         // Setters
 
-        void set_side_to_move(Side);
         void set_castling(char, bool);
-        void set_side_has_castled(Side);
         void set_en_passant_target_square(std::string);
-        void set_half_move_counter(int);
         void set_full_move_counter(int);
+        void set_half_move_counter(int);
+        void set_side_has_castled(Side);
+        void set_side_to_move(Side);
 };

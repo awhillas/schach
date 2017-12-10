@@ -32,10 +32,11 @@ Piece * Board::place_piece(char type, int file, int rank) {
 }
 
 bool Board::place_piece(Piece & piece) {
-    if (piece.position->col < 0
-        || piece.position->col >= width
-        || piece.position->row < 0
-        || piece.position->row >= height
+    auto position = piece.getPosition();
+    if (position->col < 0
+        || position->col >= width
+        || position->row < 0
+        || position->row >= height
     )
         throw invalid_argument( string("Can not place a piece :(") );
 
@@ -64,7 +65,7 @@ void Board::set_side_has_castled(Side side) {
         castling['q'] = false;
     }
     else {
-        throw range_error("Unknown side as has castled?");
+        throw range_error("Unknown side when setting 'has castled'?");
     }
 }
 
@@ -186,12 +187,16 @@ string Board::to_fen() const {
 }
 
 vector<Move *> Board::getMoves() {
+    // TODO:
+    // - En passant
+    // - castling
+    // - check for revealed checks
     vector<Move*> moves {};
-    for(auto& piece : piece_list) {
+    for(Piece * piece : piece_list) {
         if (piece->side == side_to_move) {
-            auto places = piece->getSquares(*this);
-            for (auto& sqr : places) {
-                moves.push_back(new Move(piece, sqr));
+            auto places = piece->getSquares(*this); // Square Piece can potentially move to
+            for (Square * sqr : places) {
+                moves.push_back(new Move(this, piece, sqr));
             }
         }
     }

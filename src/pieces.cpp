@@ -30,7 +30,6 @@ bool Piece::isAt(Square * place) const {
     return *position == *place;
 }
 
-
 Piece * Piece::make_piece(char type, Side side, int file, int rank) {
     // Piece factory
     switch(type) {
@@ -60,8 +59,13 @@ Piece * Piece::make_piece(char type, Side side, int file, int rank) {
 
 vector<Square *> Piece::getSquares(Board b) const { return vector<Square *>(); }
 
+void Piece::set(Square * s) {
+    position = s;
+}
 
-
+Square * Piece::getPosition() {
+    return position;
+}
 
 //
 // JumpingPiece
@@ -98,7 +102,6 @@ vector<Square*> JumpingPiece::getSquares(Board board) const {
 //
 // SlidingPiece
 //
-
 
 SlidingPiece::SlidingPiece(
         Side side,
