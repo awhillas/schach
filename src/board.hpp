@@ -49,6 +49,7 @@ class Board {
 
         Piece *             get(int, int) const;
         Square *            getSquare(int, int) const;
+        Square *            getSquare(std::string) const;
         Piece *             place_piece(char, int, int);
         bool                place_piece(Piece &);
         std::string         to_string() const;
@@ -57,11 +58,13 @@ class Board {
         // Move generation
 
         std::vector<Move*>  getMoves();
+        // Piece *             move(Piece *, Square *);
 
         // Setters
 
         void set_castling(char, bool);
         void set_en_passant_target_square(std::string);
+        void set_en_passant_target_square(Square *);
         void set_full_move_counter(int);
         void set_half_move_counter(int);
         void set_side_has_castled(Side);

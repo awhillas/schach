@@ -17,30 +17,44 @@ class Board;
       the from and to Squares are recorded as well as the Piece moved.
     - The Board passed is assumed to be
 */
-class Move {
-protected:
-    Board *     board;
-    Piece *     piece;
-    Square *    from;
-    Square *    to;
+class Move
+{
+    protected:
+        Board *     board;
+        Piece *     piece;
+        Square *    from;
+        Square *    to;
 
-public:
-                            Move(Board *, Piece *, Square *);
-                            Move(Board *, Square *, Square *);
-    virtual                 ~Move();
-    virtual std::string     to_string();
-    virtual void            make();   // Command execute
-    virtual void            unmake(); // Command undo
-    Piece *                 getPiece();
-    Square *                getFrom();
-    Square *                getTo();
-
+    public:
+                                Move(Board *, Piece *, Square *);
+                                Move(Board *, Square *, Square *);
+        virtual                 ~Move();
+        virtual std::string     to_string();
+        virtual bool            make();   // Command execute
+        virtual bool            unmake(); // Command undo
+        Piece *                 getPiece();
+        Square *                getFrom();
+        Square *                getTo();
 };
 
-/*
-class EnPassant : public Move {
-public:
-    bool make() override;
-    bool unmake() override;
+
+class Capture : public Move
+{
+    protected:
+        Piece * captured;
+
+    public:
+        bool make() override;
+        bool unmake() override;
 };
-*/
+
+
+class EnPassant : public Capture
+{
+    private:
+        Square * capture_square;
+
+    public:
+        bool make() override;
+        bool unmake() override;
+};

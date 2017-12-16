@@ -1,5 +1,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
+
+#include "src/fen"
 #include "src/move.hpp"
 #include "src/board.hpp"
 #include "src/square.hpp"
@@ -42,3 +44,11 @@ TEST_F(MoveTest, ConstructorWithTwoSquares)
 
     delete m;
 }
+
+TEST_F(MoveTest, EnPassantBlackTakesWhite)
+{
+    Board b = FENParser("k7/8/8/8/3Pp3/8/8/K7 b - d3 0 1").parse();
+
+}
+
+TEST_F(MoveTest, EnPassantWhiteTakesBlack) {}

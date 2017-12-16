@@ -70,8 +70,11 @@ void Board::set_side_has_castled(Side side) {
 }
 
 void Board::set_en_passant_target_square(string ep_square) {
-    auto sqr = Square::from_algebratic(ep_square);
-    en_passant_sqr = SquaresBoard::get(sqr->col, sqr->row);
+    en_passant_sqr = Square::from_algebratic(ep_square);
+}
+
+void Board::set_en_passant_target_square(Square * sqr) {
+    en_passant_sqr = sqr;
 }
 
 void Board::set_half_move_counter(int count) {
@@ -129,7 +132,14 @@ Piece * Board::get(int file, int rank) const {
 }
 
 Square * Board::getSquare(int file, int rank) const {
-    return SquaresBoard::get(file, rank);
+    if (file < WIDTH and file >= 0 and rank < HEIGHT and rank >= 0)
+        return SquaresBoard::get(file, rank);
+    else
+        throw out_of_range("Rank or file is off the board");
+}
+
+Square * Board::getSquare(string algebraic) const {
+    return SquaresBoard::get(algebraic);
 }
 
 string Board::to_fen() const {
@@ -202,3 +212,15 @@ vector<Move *> Board::getMoves() {
     }
     return moves;
 }
+
+/*
+    Move a Piece to a square.
+    Returns the occupier of the Square or nullptr if none.
+
+Piece * move(Piece * piece, Square * sqr) {
+    piece->set(sqr);
+    auto occupier = sqr->getOccupier();
+    sqr->setOccupier(piece);
+    return occupier;
+}
+*/

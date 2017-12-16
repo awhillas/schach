@@ -67,9 +67,9 @@ Square * Piece::getPosition() {
     return position;
 }
 
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 // JumpingPiece
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 JumpingPiece::JumpingPiece(
         Side side,
@@ -99,9 +99,9 @@ vector<Square*> JumpingPiece::getSquares(Board board) const {
 
 
 
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 // SlidingPiece
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 SlidingPiece::SlidingPiece(
         Side side,
@@ -138,9 +138,9 @@ vector<Square *> SlidingPiece::getSquares(Board board) const {
 
 
 
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 // King
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 King::King(Side s, int x, int y) : JumpingPiece(s, x, y, {
     {-1,-1}, {0,-1}, {1,-1},
@@ -154,9 +154,9 @@ string King::to_string() const {
 
 
 
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 // Queen
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 Queen::Queen(Side s, int x, int y) : SlidingPiece(s, x, y,{
     {-1,-1}, {0,-1}, {1,-1},
@@ -170,9 +170,9 @@ string Queen::to_string() const {
 
 
 
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 // Bishop
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 Bishop::Bishop(Side s, int x, int y) : SlidingPiece(s, x, y, {{-1,-1}, {1,-1}, {-1, 1}, {1, 1}}) {}
 
@@ -182,9 +182,9 @@ string Bishop::to_string() const {
 
 
 
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 // Knight
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 Knight::Knight(Side s, int x, int y) : JumpingPiece(s, x, y, {
     {-1, 2}, {1, 2},
@@ -199,9 +199,9 @@ string Knight::to_string() const {
 
 
 
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 // Rook
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 Rook::Rook(Side s, int x, int y) : SlidingPiece(s, x, y, {{0,-1}, {0,1}, {-1,0}, {1,0}}) {}
 
@@ -211,9 +211,9 @@ string Rook::to_string() const {
 
 
 
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 // Pawn
-//
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 Pawn::Pawn(Side s, int a, int b) : Piece(s, a, b) {}
 

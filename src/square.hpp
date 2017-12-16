@@ -20,5 +20,4 @@ public:
     std::string     to_algebraic() const;
     std::string     to_string() const;
     bool            operator==(const Square&) const;
-    static Square * from_algebratic(std::string);
 };
